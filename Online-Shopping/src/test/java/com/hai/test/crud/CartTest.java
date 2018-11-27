@@ -2,8 +2,7 @@ package com.hai.test.crud;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
-import java.util.Stack;
+import static org.junit.Assert.assertTrue;
 
 import org.hibernate.SessionFactory;
 import org.junit.BeforeClass;
@@ -14,7 +13,6 @@ import com.hai.idao.ICartDAO;
 import com.hai.model.Cart;
 import com.hai.model.Guest;
 import com.hai.util.SessionFactoryBuilderUtil;
-import com.test.tesKnowledge.Car;
 
 public class CartTest {
 	
@@ -28,28 +26,80 @@ public class CartTest {
 	}
 	
 	
-//	@Test
+//	@Test //OK
 	public void testSave() {
 		Cart cart = new Cart();
-		cart.setAmountTotal(100);
+		cart.setAmountTotal(9);
 		cart.setGuest(new Guest());
-		cart.setMoneyTotal(1000000);
-	
+		cart.setMoneyTotal(56000);
 		cartDAO.save(cart);
-
 	}
-//	@Test
+//	@Test //OK
 	public void testUpdate() {
+		Cart cart = cartDAO.findById(3);
+		cart.setAmountTotal(10);
+		cartDAO.update(cart);
+		assertEquals(10,cartDAO.findById(3).getAmountTotal(),0);
+	}
+//	@Test //OK
+	public void testDelete() {
+		Cart cart = cartDAO.findById(2);
+		assertTrue(cartDAO.delete(cart));
+	}
+//	@Test //OK
+	public void testDeteleById() {
+		assertTrue(cartDAO.delete(1));
+	}
+	
+//	@Test   //OK
+	public void testFindById() {
+		assertNotNull(cartDAO.findById(3));
+	} 
+
+	
+	
+//	@Test //ok
+	public void testFindALL() {
+		assertEquals(2, cartDAO.findAll().size());
 		
 	}
-//	@Test
-	public void testFindALL() {
+//	@Test //ok
+	public void testFinByProperty() {
+		assertEquals(1, cartDAO.findByProperty("amountTotal", 9).size(),0);
+		
 		
 	}
 	
-//	@Test
-	public void testFindByID() {
-		assertNotNull("ok", cartDAO.findById(1));
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

@@ -24,16 +24,18 @@ public interface ICartDAO {
 	public void update(Cart cart);
 	
 	/**
-	 * Delete Cart record in db
+	 * Delete Cart record in database
 	 * @param cart
+	 * @return if sucess return true else return false
 	 */
-	public void delete(Cart cart);
+	public boolean delete(Cart cart);
 	
 	/**
 	 * Delete Cart record using identifier
 	 * @param cartID This param determine identifier
+	 * @return If sucess return true else return false
 	 */
-	public void  delete(Integer cartID);
+	public boolean  delete(Integer cartID);
 	
 	/**
 	 *
@@ -51,9 +53,9 @@ public interface ICartDAO {
 	
 	/**
 	 * Find all Cart that fit to the conditions 
-	 * @param name  The propertiy name
-	 * @param proValue The property value
-	 * @return List of Cart
+	 * @param name  The name of property
+	 * @param proValue The value of property
+	 * @return List of carts from database 
 	 */
 	public List<Cart>  findByProperty(String name, Object proValue);
 	

@@ -26,7 +26,7 @@ public class Cart {
 	@Column(name = "Money_Total")
 	private double moneyTotal;
 	@Column(name = "Amount_Total")
-	private double amountTotal;
+	private int amountTotal;
 	
 	//Map to Guest
 	@ManyToOne(cascade=CascadeType.ALL)
@@ -58,11 +58,11 @@ public class Cart {
 		this.moneyTotal = moneyTotal;
 	}
 
-	public double getAmountTotal() {
+	public int getAmountTotal() {
 		return amountTotal;
 	}
 
-	public void setAmountTotal(double amountTotal) {
+	public void setAmountTotal(int amountTotal) {
 		this.amountTotal = amountTotal;
 	}
 
