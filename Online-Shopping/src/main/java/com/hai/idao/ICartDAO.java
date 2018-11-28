@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.hai.model.Cart;
 /**
- * This is interface specify for manipulation with dabase
+ * This is interface specifying how Cart interact with database
  * @author Mai_Van_Hai
  * @version 1.0
  * @Since 2018-10-20
@@ -12,7 +12,7 @@ import com.hai.model.Cart;
 public interface ICartDAO {
 
 	/**
-	 * This method for saveing a new object to db
+	 * This method for saveing a new Cart to db
 	 * @param cart
 	 */
 	public void save(Cart cart);

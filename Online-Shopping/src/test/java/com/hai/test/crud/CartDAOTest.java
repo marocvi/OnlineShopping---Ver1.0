@@ -14,7 +14,7 @@ import com.hai.model.Cart;
 import com.hai.model.Guest;
 import com.hai.util.SessionFactoryBuilderUtil;
 
-public class CartTest {
+public class CartDAOTest {
 	
 	private static ICartDAO cartDAO;
 	
@@ -34,10 +34,10 @@ public class CartTest {
 		cart.setMoneyTotal(56000);
 		cartDAO.save(cart);
 	}
-//	@Test //OK
+	@Test //OK
 	public void testUpdate() {
 		Cart cart = cartDAO.findById(3);
-		cart.setAmountTotal(10);
+		cart.setAmountTotal(2);
 		cartDAO.update(cart);
 		assertEquals(10,cartDAO.findById(3).getAmountTotal(),0);
 	}
