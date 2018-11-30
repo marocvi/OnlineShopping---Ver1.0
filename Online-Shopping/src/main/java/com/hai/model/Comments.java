@@ -29,7 +29,7 @@ public class Comments {
 	private byte rate;
 
 	// Create foreign key
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "User_ID", nullable = false)
 	private Users user;
 	

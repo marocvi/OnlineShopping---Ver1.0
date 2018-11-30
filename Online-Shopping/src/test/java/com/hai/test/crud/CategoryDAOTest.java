@@ -4,8 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 import com.hai.dao.CategoryDAOImpl;
 import com.hai.model.Category;
@@ -45,9 +47,9 @@ public class CategoryDAOTest {
 		assertTrue(categoryDAO.delete(12));
 	}
 	
-//	@Test ok
+	@Test //ok
 	public void testFindALL() {
-		assertEquals(2, categoryDAO.findAll().size(),0);
+		assertEquals(8, categoryDAO.findAll().size(),0);
 	}
 	
 //	@Test //ok

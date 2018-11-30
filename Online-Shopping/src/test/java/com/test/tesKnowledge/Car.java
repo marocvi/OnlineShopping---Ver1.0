@@ -18,8 +18,8 @@ public class Car {
 	@Column(name  = "Car_Id")
 	private int id;
 	private String engine;
-//	@ManyToOne(cascade = CascadeType.ALL)
-//	private Employee employee;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Employee employee;
 	public int getId() {
 		return id;
 	}

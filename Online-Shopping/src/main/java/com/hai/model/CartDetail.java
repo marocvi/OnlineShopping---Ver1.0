@@ -22,12 +22,12 @@ public class CartDetail {
 	private int amount;
 	
 	//Map to product
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(nullable=false, name = "Product_ID")
 	private Product product;
 	
 	//Map to cart
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "Cart_ID", nullable = false)
 	private Cart cart;
 

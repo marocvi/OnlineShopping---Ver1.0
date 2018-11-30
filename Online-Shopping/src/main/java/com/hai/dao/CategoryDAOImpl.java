@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
+import org.apache.log4j.Logger;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,6 +27,7 @@ public class CategoryDAOImpl implements ICategoryDAO{
 
 	private SessionFactory sessionFactory;
 	private Session session;
+	private  final Logger LOGGER;
 	/**
 	 *  <p>Initilize sessionFactory to create session.
 	 *  When we use this DAO we need to pass SessionFactory intance 
@@ -37,9 +39,12 @@ public class CategoryDAOImpl implements ICategoryDAO{
 	 */
 	public CategoryDAOImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+		LOGGER = Logger.getLogger(CategoryDAOImpl.class.getName());
 	}
 	
 	public boolean save(Category category) {
+		LOGGER.debug("Call method for saving Category into DB");
+		//Open new session
 		session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.setHibernateFlushMode(FlushMode.MANUAL);
@@ -50,19 +55,26 @@ public class CategoryDAOImpl implements ICategoryDAO{
 			session.persist(category);
 			session.flush();
 			session.getTransaction().commit();
+			LOGGER.debug("Category is saved to DB");
 		}
 		catch(Exception e) {
+			LOGGER.error("Can't save Category to DB");
 			e.printStackTrace();
-			session.close();
 			return false;
 		}
 		
-		session.close();
+		finally {
+			//Close session
+			session.close();
+		}
+		
 		return true;
 		
 	}
 
 	public boolean update(Category category) {
+		LOGGER.debug("Call update Category method");
+		//Open new session
 		session = sessionFactory.openSession();
 		//Use manual flush for better control.
 		session.setHibernateFlushMode(FlushMode.MANUAL);
@@ -70,22 +82,21 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		try {
 			
 			session.beginTransaction();
-			
 			session.update(category);
-			
 			session.flush();
-		
 			session.getTransaction().commit();
-			
+		LOGGER.debug("Category is updated to DB");
 					
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 			session.getTransaction().rollback();
+			LOGGER.error("Can't save Category to DB");
 			return false;
 		}
-		finally {
 		
+		finally {
+			//Close session
 			session.close();
 		}
 	
@@ -93,6 +104,8 @@ public class CategoryDAOImpl implements ICategoryDAO{
 	}
 
 	public boolean delete(Category category) {
+		LOGGER.debug("Call delete Category");
+		//Open new session
 		session = sessionFactory.openSession();
 		session.setHibernateFlushMode(FlushMode.MANUAL);
 		try {
@@ -100,14 +113,18 @@ public class CategoryDAOImpl implements ICategoryDAO{
 			session.delete(category);
 			session.flush();
 			session.getTransaction().commit();
+			LOGGER.debug("Delete Category in DB");
 			return true;
 		}
 		catch(Exception e){
+			LOGGER.error("Can't delete Category in DB");
 			e.printStackTrace();
 			session.getTransaction().rollback();
 			return false;
 		}
+		
 		finally {
+			//Close session
 			session.close();
 		}
 		
@@ -117,6 +134,8 @@ public class CategoryDAOImpl implements ICategoryDAO{
 	 * @param cartgoryID 
 	 */
 	public boolean delete(Integer cartgoryID) {
+		LOGGER.debug("Call delete Category ");
+		//Open session
 		session = sessionFactory.openSession();
 		String hql = "Delete from Category where id =:categoryID";
 		try {
@@ -128,16 +147,20 @@ public class CategoryDAOImpl implements ICategoryDAO{
 			return true;
 		}
 		catch(Exception e){
+			LOGGER.error("Can't delete Category in DB");
 			e.printStackTrace();
 			session.getTransaction().rollback();
 			return false;
 		}
 		finally {
+			//Close session
 			session.close();
 		}
 	}
 
 	public Category findById(Integer categoryID) {
+		LOGGER.debug("Call find Category by ID");
+		//Open session
 		session = sessionFactory.openSession();
 		session.setHibernateFlushMode(FlushMode.MANUAL);
 		Category category = null;
@@ -146,18 +169,23 @@ public class CategoryDAOImpl implements ICategoryDAO{
 			category = session.get(Category.class, categoryID);
 			session.flush();
 			session.getTransaction().commit();
+			LOGGER.debug("Fetch Category sucessfully!");;
 		}
 		catch(Exception e) {
+			LOGGER.error("Can't find Category in DB");
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
 		finally {
+			//Close session
 			session.close();
 		}
 		return category;
 	}
 
 	public List<Category> findAll() {
+		LOGGER.debug("Call find all Categories in DB");
+		//Open session
 		session = sessionFactory.openSession();
 		List<Category> categories = null ;
 		try {
@@ -166,18 +194,23 @@ public class CategoryDAOImpl implements ICategoryDAO{
 			categories = query.getResultList();
 			session.flush();
 			session.getTransaction().commit();
+			LOGGER.debug("Found categories");
 		}
 		catch(Exception e) {
+			LOGGER.error("Can't find categories in DB");
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
 		finally {
+			//Close session
 			session.close();
 		}
 		return categories;
 	}
 
 	public List<Category> findByProperty(String name, Object proValue) {
+		LOGGER.debug("Call find Category fit property condition");
+		//Open session
 		session = sessionFactory.openSession();
 		List<Category> categories = null ;
 		try {
@@ -189,11 +222,14 @@ public class CategoryDAOImpl implements ICategoryDAO{
 			Query<Category> query = session.createQuery(criteriaQuery);
 			query.setParameter(paramValue, proValue);
 			categories  = query.getResultList();
+			LOGGER.debug("Fetch some Categories sucessfully");
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+			LOGGER.error("Can't fetch Categories in DB");
 		}
 		finally {
+			//Close session
 			session.close();
 		}
 		return categories;

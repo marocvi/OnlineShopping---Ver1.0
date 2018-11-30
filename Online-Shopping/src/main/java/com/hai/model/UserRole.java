@@ -23,11 +23,13 @@ public class UserRole {
 	@Id
 	private int id;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="Role_ID")
+	//Map to Role
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	@JoinColumn(name="Role_ID", nullable = false)
 	private Role role;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	//Map to User
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="User_ID",nullable=false)
 	private Users user;
 	

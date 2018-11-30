@@ -4,7 +4,7 @@
 <hibernate-configuration>
  <!--  TODO/ Using build in connection pooling should be replaced by datasource later -->
  <session-factory >
-  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
   <property name="hibernate.connection.password">Ahaiproo</property>
   <property name="hibernate.connection.url">jdbc:mysql://localhost/jndi</property>
   <property name="hibernate.connection.username">root</property>

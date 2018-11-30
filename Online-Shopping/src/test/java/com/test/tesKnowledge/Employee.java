@@ -10,15 +10,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.SelectBeforeUpdate;
+
 @Entity
 public class Employee {
 
 	@Id
 	@GeneratedValue(strategy =GenerationType.IDENTITY)
 	@Column(name = "employee_ID")
+	
 	private int id;
 	private String name;
-	@OneToMany( cascade = CascadeType.ALL)
+	@OneToMany( cascade = CascadeType.ALL, mappedBy= "employee")
 	private List<Car> cars ;
 	public int getId() {
 		return id;

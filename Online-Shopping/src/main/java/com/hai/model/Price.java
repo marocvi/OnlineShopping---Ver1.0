@@ -27,7 +27,7 @@ public class Price {
 	@ManyToOne(cascade= CascadeType.ALL,fetch= FetchType.LAZY)
 	@JoinColumn(name="Product_ID",nullable=false)
 	private Product product;
-	private double unitPrice;
+	private Double unitPrice;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "Start_Date")
 	private Date startDate;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+	<appender name = "dataAcessLogger" class = "org.apache.log4j.ConsoleAppender">
+		<layout class = "org.apache.log4j.PatternLayout">
+			<param name = "conversionPattern" value = "%d{dd-MM-yyyy HH:mm:ss} [%t] %p at %l - %m%n"/>
+		</layout>
+	</appender>
+	<logger name = "com.apress.logging.log4j" additivity = "false">
+		<level value="debug"/>
+		<appender-ref ref="dataAcessLogger"/>
+	</logger>
+	<root>
+		<priority value="info"/>
+		<appender-ref ref = "dataAcessLogger" />
+	</root>
+	
+</log4j:configuration>

@@ -40,8 +40,8 @@ public class Product {
 	// Map to Supplier
 	@ManyToMany (cascade = CascadeType.ALL)
 	@JoinTable(name = "Product_Supplier",
-		joinColumns = @JoinColumn(name = "Product_ID"),
-		inverseJoinColumns = @JoinColumn(name = "Supplier_ID") )
+		joinColumns = @JoinColumn(name = "Product_ID",nullable = false),
+		inverseJoinColumns = @JoinColumn(name = "Supplier_ID", nullable = false) )
 	private List<Supplier> suppliers;
 
 	// Map to List

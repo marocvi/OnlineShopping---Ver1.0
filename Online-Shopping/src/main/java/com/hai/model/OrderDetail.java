@@ -24,12 +24,12 @@ public class OrderDetail {
 	private double unitPrice;
 
 	//Map to Order_Table
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn (name = "Order_ID" ,nullable = false)
 	private Order order;
 	
 	//Map to Product
-	@ManyToOne(cascade = CascadeType.ALL )
+	@ManyToOne(cascade = CascadeType.PERSIST )
 	@JoinColumn(name = "Product_ID" , nullable = false)
 	private Product product;
 	
