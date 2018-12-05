@@ -14,62 +14,65 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Users")
+@Table(name = "Users")
 public class Users {
+	public static final String BAN = "ban";
+	public static final String ACTIVE = "active";
+	public static final String PENDING = "pending";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="User_ID")
+	@Column(name = "User_ID")
 	private int id;
-	@Column(name="User_Name")
-	private String name;
 	private String passwords;
 	private String email;
 	private String address;
 	private String phone;
-	@Column(name="create_Date")
+	@Column(name = "First_Name")
+	private String firstName;
+	@Column(name = "Last_Name")
+	private String lastName;
+	@Column(name = "Verify_ID")
+	private String verifyID;
+
+	@Column(name = "create_Date")
 	private Date createDate;
-	@Column(name="Login_Status")
+	@Column(name = "Login_Status")
 	private String loginStatus;
-	
-	//Map to User Role
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+	private String token;
+
+	// Map to User Role
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<UserRole> roles;
-	
-	//Map to Comment
-	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+
+	// Map to Comment
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Comments> comments;
-	
-	//Map to Whishlist
-	@OneToMany(mappedBy="user",cascade=CascadeType.ALL)
+
+	// Map to Whishlist
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Wishlist> wishlists;
-	
-	//Map to Cart
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+
+	// Map to Cart
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Cart> carts;
-	
-	//Map to Order
+
+	// Map to Order
 	@OneToMany(mappedBy = "orderUser", cascade = CascadeType.ALL)
 	private List<Order> paidUserOrders;
 	@OneToMany(mappedBy = "processUser", cascade = CascadeType.ALL)
 	private List<Order> processUserOrders;
-	
-	//Map to Export
-	@OneToMany(mappedBy ="user", orphanRemoval = true,cascade = CascadeType.ALL)
+
+	// Map to Export
+	@OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Export> exports = new ArrayList<Export>();
-	
-	
-	//Map to Import
-	@OneToMany(mappedBy ="user", cascade = CascadeType.ALL)
+
+	// Map to Import
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Import> imports;
-	
-	
-	
 
-	
+	// Getter and setter
 
-	//Getter and setter
-	
 	public List<Import> getImports() {
 		return imports;
 	}
@@ -104,18 +107,6 @@ public class Users {
 
 	public void setProcessUserOrders(List<Order> processUserOrders) {
 		this.processUserOrders = processUserOrders;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getPasswords() {
@@ -198,5 +189,40 @@ public class Users {
 		this.carts = carts;
 	}
 
-	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getVerifyID() {
+		return verifyID;
+	}
+
+	public void setVerifyID(String verifyID) {
+		this.verifyID = verifyID;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public enum LoginStatus {
+		ACTIVE, PENDING, BAN
+	}
+
 }

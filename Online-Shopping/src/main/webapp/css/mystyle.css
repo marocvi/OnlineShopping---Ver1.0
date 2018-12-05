@@ -1,0 +1,26 @@
+	
+	.error {
+	color: red;
+}
+
+p.error {
+	color: black;
+	margin-top:50px;
+	margin-left :20px;
+}
+
+
+ul.error {
+	list-style-type: decimal;
+	margin-left: 50px;
+	margin-bottom: 50px;
+	margin-top: 30px;
+}
+ul.error li{
+	margin-top:10px;
+}
+.sucess_msg {
+	color: green;
+	margin: 50px;
+}
+

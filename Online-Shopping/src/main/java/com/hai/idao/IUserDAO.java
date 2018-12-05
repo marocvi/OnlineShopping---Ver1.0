@@ -20,8 +20,12 @@ public interface IUserDAO {
 	public boolean delete(Integer userID);
 
 	public Users findById(Integer userID);
+	
+	public Users findByEmail(String email);
 
 	public List<Users> findAll();
 	
 	public List<Users> findByProperty(String name, Object proValue);
+	
+
 }

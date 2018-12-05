@@ -33,8 +33,8 @@ public class UserDAOTest {
 //	@Test //Ok
 	public void testUpdateUsers() {
 		Users user = new Users();
-		user.setId(3);
-		user.setName("hai");
+//		user.setId(3);
+//		user.setName("hai");
 		assertTrue(userDAO.update(user));
 	}
 //	@Test //ok
@@ -59,9 +59,14 @@ public class UserDAOTest {
 		assertEquals(2, userDAO.findAll().size(),0);
 	}
 	
-	@Test //ok
+//	@Test //ok
 	public void testFindByProperty() {
-		assertEquals(1, userDAO.findByProperty("name","hai").size());
+		assertEquals(1, userDAO.findByProperty("email","marocvi89@gmail.com").size());
+	}
+	
+	@Test
+	public void testFindByEmail() {
+		assertNotNull(userDAO.findByEmail("kithuathatnhandalat@gmail.com"));
 	}
 	
 }

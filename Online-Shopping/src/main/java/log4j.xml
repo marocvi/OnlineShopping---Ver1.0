@@ -3,7 +3,7 @@
 <log4j:configuration>
 	<appender name = "dataAcessLogger" class = "org.apache.log4j.ConsoleAppender">
 		<layout class = "org.apache.log4j.PatternLayout">
-			<param name = "conversionPattern" value = "%d{dd-MM-yyyy HH:mm:ss} [%t] %p at %l - %m%n"/>
+			<param name = "conversionPattern" value = "%d{HH:mm:ss} %p at %l - %m%n"/>
 		</layout>
 	</appender>
 	<logger name = "com.apress.logging.log4j" additivity = "false">
