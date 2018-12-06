@@ -38,6 +38,15 @@ public class EmailUtilImpl implements EmailUtil {
 			break;
 		case NOTIFICATION:
 			break;
+		case CHANGE_PASS:
+			subject = "Change Password Notification";
+			message ="Recently you have change your account password on our website. \n"
+					+ "If it is not your action, you can contact to vanhai.mai@psoft.com for secure your account";
+			break;
+		case CLOSE_ACCOUNT:
+			subject = "Close Account Notification";
+			message ="Recently you have close your account on our website. \n"
+					+ "If it is not your action, you can contact to vanhai.mai@psoft.com for the support.";
 		default:
 			break;
 		}

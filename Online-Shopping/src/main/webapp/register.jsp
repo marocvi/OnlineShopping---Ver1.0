@@ -82,7 +82,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<%@ include file="include/header.jsp"%>
 
 	<jsp:include page="include/register_form.jsp"></jsp:include>
-
+	
 
 	<!-- Add footer here -->
 	<%@ include file="include/footer.jsp"%>

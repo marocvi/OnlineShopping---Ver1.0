@@ -81,7 +81,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- Add header -->
 	<%@ include file="include/header.jsp"%>
 	
-	<jsp:include page="include/profile_list.jsp"></jsp:include>
+	<!-- Add nav bar and assign section value -->
+	<jsp:include page="include/profile_nav.jsp">
+		<jsp:param value="${param.choice}" name="choice"/>
+	</jsp:include>
 
 	<!-- Add footer here -->
 	<%@ include file="include/footer.jsp"%>

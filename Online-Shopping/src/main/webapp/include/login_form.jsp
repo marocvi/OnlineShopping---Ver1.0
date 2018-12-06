@@ -22,7 +22,6 @@
 						name="email" value = "${user.email}">
 					<p class="error">
 						<c:out value="${error.emailNull}"></c:out>
-						<c:out value="${error.emailExist}"></c:out>
 					<p>
 				</div>
 				<div>

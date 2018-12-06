@@ -45,39 +45,13 @@ public class RegisterController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		// Get user from the request
-		
-		String firstName = request.getParameter("firstName");
-		String lastName =request.getParameter("lastName");
-		String phone = request.getParameter("phone");
-		String address = request.getParameter("address");
-		String email = request.getParameter("email");	
-		String password = request.getParameter("password");
-		
-		
-		//Encryp User's Information
-		EncryptUtil encrypt = new EncryptUtilImpl();
-		password = encrypt.encryptMD5(password);
-		
-		//Add user information to user
-		Users user = new Users();
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		user.setPhone(phone);
-		user.setAddress(address);
-		user.setEmail(email);
-		user.setPasswords(password);
-		
-		
-		
-		LOGGER.info("Got the User!");
 		// Check If Information correct then go to login else back to singn up page
-		HashMap<String, String> error = userService.validateUserInfor(user);
-		if(userService.checkExist(user.getEmail())) {
+		HashMap<String, String> error = userService.validateUserInfor(request);
+		Users user= userService.getUserFromRequest(request);
+		if (userService.checkExist(user.getEmail())) {
 			error.put("emailExist", "Your email has already existed. Please try another email!");
 		}
-
+		
 		if (error.size() > 0) {
 			// Set error back to page
 			request.setAttribute("error", error);
@@ -90,23 +64,24 @@ public class RegisterController extends HttpServlet {
 			request.getRequestDispatcher("register.jsp").forward(request, response);
 			;
 		} else {
+			
+			// Encryp User's Information
+			EncryptUtil encrypt = new EncryptUtilImpl();
+			user.setPasswords(encrypt.encryptMD5(user.getPasswords()));
 
 			// Save pendingUser to DB and send email to verify user
 			user.setLoginStatus(LoginStatus.PENDING.toString());
 			user.setVerifyID(UUID.randomUUID().toString());
 			userService.saveUser(user);
-
 			// Send email
 			EmailUtil emailUtil = new EmailUtilImpl();
-			emailUtil.setToEmail(user.getEmail())
-			.setFromEmail("marocvi89@gmail.com")
-			.setPurpose(EmailPurpose.VERIFICATION)
-			.setVerifyID(user.getVerifyID())
-			.send();
-
+			emailUtil.setToEmail(user.getEmail()).setFromEmail("marocvi89@gmail.com")
+					.setPurpose(EmailPurpose.VERIFICATION).setVerifyID(user.getVerifyID()).send();
+			
 			// Sucess: Redirect to Login page to prevent double-submit
 			response.sendRedirect("account?action=login");
 			LOGGER.info("User sucessfully save to DB. Go to verification phase");
+
 		}
 
 	}

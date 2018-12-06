@@ -222,7 +222,7 @@ public class Users {
 	}
 
 	public enum LoginStatus {
-		ACTIVE, PENDING, BAN
+		ACTIVE, PENDING, BAN, CLOSE
 	}
 
 }

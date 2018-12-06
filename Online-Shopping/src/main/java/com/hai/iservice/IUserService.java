@@ -2,6 +2,8 @@ package com.hai.iservice;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.hai.model.Users;
 
 public interface IUserService {
@@ -28,7 +30,7 @@ public interface IUserService {
 	 * Check and Validation User'Information
 	 * @return  number of errors
 	 */
-	public HashMap<String, String> validateUserInfor(Users user);
+	public HashMap<String, String> validateUserInfor(HttpServletRequest request);
 	/**
 	 *  Change loginstatus to active
 	 *  
@@ -60,6 +62,21 @@ public interface IUserService {
 	 * @param user
 	 */
 	public void updateUser(Users user);
+	
+	/**
+	 * This function take request and get information of user 
+	 * @param request  The request com from client
+	 * @return The user information from request.
+	 */
+	public Users getUserFromRequest(HttpServletRequest request);
+	
+	/**
+	 * Validation of information user enter when they want to change password
+	 * @return
+	 */
+	public HashMap<String, String> validateChangePassword(HttpServletRequest request);
+	
+	
 	
 	
 	

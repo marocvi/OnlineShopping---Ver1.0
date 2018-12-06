@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 
 import com.hai.iservice.IUserService;
 import com.hai.model.Users;
+import com.hai.model.Users.LoginStatus;
 import com.hai.service.UserServiceImpl;
 
 /**
@@ -57,9 +58,10 @@ public class MyRequestListener implements ServletRequestListener {
 
 					// Get user from db and check whether token valid or invalid.
 					Users user = userService.getUserByEmail(email);
-					if (user != null && user.getToken().equals(token)) {
+					//Check if wether exist 
+					if (user != null && user.getToken().equals(token)
+							&& user.getLoginStatus().equals(LoginStatus.ACTIVE.toString())) {
 						// If session doesnt have user yet, seve user to session
-
 						session.setAttribute("user", user);
 						LOGGER.info("Add user to session");
 

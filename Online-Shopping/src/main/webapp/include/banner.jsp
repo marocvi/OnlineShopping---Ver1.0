@@ -17,10 +17,6 @@
 					<p>Childish Gambino - Camp Now Available for just $9.99</p>
 					<a href="single.html" class="hvr-shutter-in-vertical ">Purchase</a>
 				</div>
-				<div class="purchase">
-					<a href="single.html"
-						class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">Purchase</a>
-				</div>
 				<div class="clearfix"></div>
 			</div>
 		</div>

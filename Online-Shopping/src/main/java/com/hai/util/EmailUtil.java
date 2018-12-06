@@ -10,7 +10,7 @@ import org.apache.commons.mail.Email;
 public interface EmailUtil {
 
 	public static enum EmailPurpose {
-		VERIFICATION, NOTIFICATION
+		VERIFICATION, NOTIFICATION, CLOSE_ACCOUNT, CHANGE_PASS
 	}
 	/**
 	 * Set the recieved email

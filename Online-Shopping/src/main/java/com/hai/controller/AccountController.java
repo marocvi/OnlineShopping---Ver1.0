@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class HomeController
@@ -31,13 +32,15 @@ public class AccountController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// Get session
+		HttpSession session = request.getSession();
 		// Get action , if action is null navigate to homepage.
 		String action = request.getParameter("action") != null ? request.getParameter("action") : "home";
 
 		switch (action) {
 		// If action is "login" navigate to login page
 		case "login":
-			if (request.getSession().getAttribute("user") != null) {
+			if (session.getAttribute("user") != null) {
 				response.sendRedirect("home");
 			} else
 				request.getRequestDispatcher("/login.jsp").forward(request, response);
@@ -55,7 +58,12 @@ public class AccountController extends HttpServlet {
 			break;
 
 		case "profile":
-			request.getRequestDispatcher("/profile").forward(request, response);
+			if (session.getAttribute("user") != null) {
+				request.getRequestDispatcher("/profile.jsp?choice=profile").forward(request, response);
+			}
+			else
+				response.sendRedirect("home");
+			
 			break;
 		}
 

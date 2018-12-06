@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.hibernate.SessionFactory;
 
 import com.hai.dao.UserDAOImpl;
@@ -11,12 +14,16 @@ import com.hai.idao.IUserDAO;
 import com.hai.iservice.IUserService;
 import com.hai.model.Users;
 import com.hai.model.Users.LoginStatus;
+import com.hai.util.EncryptUtil;
+import com.hai.util.EncryptUtilImpl;
 
 public class UserServiceImpl implements IUserService {
 	private IUserDAO userDAO;
+	private EncryptUtil encryptUtil;
 
 	public UserServiceImpl(SessionFactory sessionFactory) {
 		userDAO = new UserDAOImpl(sessionFactory);
+		encryptUtil = new EncryptUtilImpl();
 	}
 
 	@Override
@@ -37,7 +44,10 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public HashMap<String, String> validateUserInfor(Users user) {
+	public HashMap<String, String> validateUserInfor(HttpServletRequest request) {
+		// Get user from the request
+		Users user = getUserFromRequest(request);
+
 		// Hashmap to store number of erors may ever occur.
 		HashMap<String, String> error = new HashMap<>();
 
@@ -66,12 +76,12 @@ public class UserServiceImpl implements IUserService {
 		if (user.getAddress() == "") {
 			error.put("address", "Please enter your address");
 		}
-
-		// Validate password, the password has value "" will be encrypted to
-		// "d41d8cd98f00b204e9800998ecf8427e" using MD5
-		if (user.getPasswords().equals("d41d8cd98f00b204e9800998ecf8427e")) {
+		if (user.getPasswords().equals("")) {
 			error.put("passwords", "Please enter your passwords !");
 		}
+
+		// Authenticate user information for login
+
 		return error;
 
 	}
@@ -79,7 +89,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public boolean verifyUser(String verifyID) {
 		List<Users> listOfUser = userDAO.findByProperty("verifyID", verifyID);
-		if (listOfUser!=null&&listOfUser.size() >= 1 ) {
+		if (listOfUser != null && listOfUser.size() >= 1) {
 
 			for (Users user : listOfUser) {
 				user.setCreateDate(new Date());
@@ -97,11 +107,11 @@ public class UserServiceImpl implements IUserService {
 	public boolean authenticate(String email, String passwords) {
 		Users user = null;
 		user = userDAO.findByEmail(email);
-		
+
 		if (user == null) {
 			return false;
 		}
-		if(!user.getLoginStatus().equals(LoginStatus.ACTIVE.toString())) {
+		if (!user.getLoginStatus().equals(LoginStatus.ACTIVE.toString())) {
 			return false;
 		}
 		if (!passwords.equals(user.getPasswords())) {
@@ -121,7 +131,59 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void updateUser(Users user) {
 		userDAO.update(user);
-		
+
 	}
+
+	@Override
+	public Users getUserFromRequest(HttpServletRequest request) {
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String phone = request.getParameter("phone");
+		String address = request.getParameter("address");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+
+		// Add user information to user
+		Users user = new Users();
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		user.setPhone(phone);
+		user.setAddress(address);
+		user.setEmail(email);
+		user.setPasswords(password);
+		return user;
+	}
+
+	@Override
+	public HashMap<String, String> validateChangePassword(HttpServletRequest request) {
+		HashMap<String, String> error = new HashMap<>();
+		HttpSession session = request.getSession();
+		Users user = (Users) session.getAttribute("user");
+		String password = request.getParameter("oldPassword");
+		password = encryptUtil.encryptMD5(password);
+
+		// Validate input
+		if (request.getParameter("oldPassword").equals("")) {
+			error.put("oldPassword", "Please enter your old password");
+		}
+		if (request.getParameter("newPassword").equals("")) {
+			error.put("newPassword", "Please enter your new password");
+		}
+		if (request.getParameter("retypePassword").equals("")) {
+			error.put("retypePassword", "Please re-enter password");
+		}
+		if (!request.getParameter("newPassword").equals(request.getParameter("retypePassword"))
+				&&error.get("newPassword")==null&error.get("retypePassword")==null) {
+			error.put("notMatch", "Your password you re-enter is not match");
+		}
+
+		if (!password.equals(user.getPasswords()) && !password.equals("d41d8cd98f00b204e9800998ecf8427e")) {
+			error.put("incorrectPassword", "Your old password is incorrect. Please try again");
+		}
+
+		return error;
+		
+		}
+	
 
 }

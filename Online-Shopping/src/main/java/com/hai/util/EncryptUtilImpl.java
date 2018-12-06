@@ -30,7 +30,7 @@ public class EncryptUtilImpl implements EncryptUtil{
 	public static void main(String[] args) {
 		EncryptUtilImpl encrypt = new EncryptUtilImpl();
 		
-		System.out.println(encrypt.encryptMD5(""));
+		System.out.println(encrypt.encryptMD5("123"));
 	}
 
 }

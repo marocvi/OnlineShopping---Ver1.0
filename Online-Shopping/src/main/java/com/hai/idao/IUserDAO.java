@@ -28,4 +28,6 @@ public interface IUserDAO {
 	public List<Users> findByProperty(String name, Object proValue);
 	
 
+	
+
 }
