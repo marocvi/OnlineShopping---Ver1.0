@@ -39,6 +39,7 @@ public class UserRoleDAOImpl implements IUserRoleDAO{
 	}
 	
 	
+	@Override
 	public boolean save(UserRole userRole) {
 		LOGGER.debug("Call save UserRole");
 		//Open  new session 
@@ -69,6 +70,7 @@ public class UserRoleDAOImpl implements IUserRoleDAO{
 		
 	}
 
+	@Override
 	public boolean update(UserRole userRole) {
 		LOGGER.debug("Call update UserRole");
 		//Open  new session 
@@ -97,6 +99,7 @@ public class UserRoleDAOImpl implements IUserRoleDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(UserRole userRole) {
 		LOGGER.debug("Call delete UserRole");
 		//Open  new session 
@@ -126,6 +129,7 @@ public class UserRoleDAOImpl implements IUserRoleDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(Integer userRoleID) {
 		
 		LOGGER.debug("Call delete UserRole");
@@ -160,6 +164,7 @@ public class UserRoleDAOImpl implements IUserRoleDAO{
 		}
 	}
 
+	@Override
 	public UserRole findById(Integer userRoleID) {
 		LOGGER.debug("Call find UserRole by ID");
 		//Open  new session 
@@ -192,6 +197,7 @@ public class UserRoleDAOImpl implements IUserRoleDAO{
 		}
 	}
 
+	@Override
 	public List<UserRole> findAll() {
 		LOGGER.debug("Call find  all UserRole ");
 		//Open  new session 
@@ -222,6 +228,7 @@ public class UserRoleDAOImpl implements IUserRoleDAO{
 		}
 	}
 
+	@Override
 	public List<UserRole> findByProperty(String name, Object proValue) {
 		LOGGER.debug("Call find UserRole fit property condition");
 		//Open session

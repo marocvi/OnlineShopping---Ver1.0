@@ -5,19 +5,22 @@
 		<div class="container">
 			<div class="header-top-in">
 				<div class="logo">
-					<a href="index.html"><img src="images/logo.png" alt=" "></a>
+					<a href='<c:url value="/home"></c:url>'><img src="images/logo.png" alt=" "></a>
+					
 				</div>
 				<div class="header-in">
 
 					<ul class="icon1 sub-icon1">
 						<li><a href="wishlist.html">WISH LIST (0)</a></li>
 						<c:choose>
+						<%--If user already login--%>
 							<c:when test="${sessionScope.user!=null}">
 								<li><a href=" <c:url value= '/account?action=profile' /> ">MY
 										ACCOUNT</a></li>
 								<li><a href=" <c:url value= '/account?action=logout' /> ">LOGOUT</a></li>
 
 							</c:when>
+						<%-- If there is no user in session --%>
 							<c:otherwise>
 								<li><a href=" <c:url value= '/account?action=register' /> ">SIGN
 										UP</a></li>
@@ -90,22 +93,16 @@
 			<div class="h_menu4">
 				<a class="toggleMenu" href="#">Menu</a>
 				<ul class="nav">
-					<li class="active"><a href="index.html"><i> </i>Desktops</a></li>
-					<li><a href="#">Laptops & Notebooks</a>
-						<ul class="drop">
-							<li><a href="products.html">Sony(2)</a></li>
-							<li><a href="products.html">Android(4)</a></li>
-							<li><a href="products.html">Apple(7)</a></li>
-							<li><a href="products.html">Acer(53)</a></li>
-							<li><a href="products.html">HP(78)</a></li>
-							<li><a href="products.html">Intel(5)</a></li>
-						</ul></li>
-					<li><a href="products.html"> Tablets</a></li>
-					<li><a href="products.html">Components</a></li>
-					<li><a href="products.html">Software</a></li>
-					<li><a href="products.html">Phones & PDAs </a></li>
-					<li><a href="products.html"> Cameras </a></li>
-					<li><a href="contact.html">Contact </a></li>
+					<li class="active"><a href='<c:url value="/home"></c:url>'><i> </i>Desktops</a></li>
+					<c:forEach var="category" items="${sessionScope.categories}">
+						<li><a href="#">${category.name}</a>
+							<ul class="drop">
+								<c:forEach var="subCategory" items="${category.subCategories}">
+									<li><a href='<c:url value="/product?action=view&subcategoryid=${subCategory.id}&page=1"></c:url>'>
+									${subCategory.name}</a></li>
+								</c:forEach>
+							</ul></li>
+					</c:forEach>
 
 				</ul>
 				<script type="text/javascript" src="js/nav.js"></script>

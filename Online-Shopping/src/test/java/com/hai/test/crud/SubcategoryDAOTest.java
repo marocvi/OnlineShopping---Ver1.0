@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.hibernate.SessionFactory;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
 import com.hai.dao.SubcategoryDAOImpl;
 import com.hai.model.Category;
@@ -20,6 +19,7 @@ public class SubcategoryDAOTest {
 	
 	@BeforeClass
 	public static void seup() {
+		
 		//Initilization
 		sessionFactory = SessionFactoryBuilderUtil.getSessionFactory();
 		subCategoryDAO = new SubcategoryDAOImpl(sessionFactory);

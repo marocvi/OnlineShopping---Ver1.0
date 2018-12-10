@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import org.hibernate.SessionFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,7 +35,7 @@ public class PriceDAOTest {
 		price.setProduct(new Product());
 		assertTrue(priceDAO.save(price));
 	}
-	@Test //Ok
+//	@Test //Ok
 	public void testUpdatePrice() {
 		Price price = new Price();
 		price.setId(3);
@@ -52,9 +55,9 @@ public class PriceDAOTest {
 		assertTrue(priceDAO.delete(2));
 	}
 	
-//	@Test //ok
+	@Test //ok
 	public void testFindByID() {
-		assertNotNull(priceDAO.findById(4));
+		System.out.println(Math.round(11/12.0));
 	}
 //	@Test //ok
 	public void testFindAll() {

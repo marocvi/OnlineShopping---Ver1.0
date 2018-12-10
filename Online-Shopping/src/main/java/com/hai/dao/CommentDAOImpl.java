@@ -39,6 +39,7 @@ public class CommentDAOImpl implements ICommentDAO{
 	}
 	
 	
+	@Override
 	public boolean save(Comments comment) {
 		LOGGER.debug("Call save Comments");
 		//Open  new session 
@@ -69,6 +70,7 @@ public class CommentDAOImpl implements ICommentDAO{
 		
 	}
 
+	@Override
 	public boolean update(Comments comment) {
 		LOGGER.debug("Call update Comments");
 		//Open  new session 
@@ -97,6 +99,7 @@ public class CommentDAOImpl implements ICommentDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(Comments comment) {
 		LOGGER.debug("Call delete Comments");
 		//Open  new session 
@@ -126,6 +129,7 @@ public class CommentDAOImpl implements ICommentDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(Integer subCartgoryID) {
 		
 		LOGGER.debug("Call delete Comments");
@@ -160,6 +164,7 @@ public class CommentDAOImpl implements ICommentDAO{
 		}
 	}
 
+	@Override
 	public Comments findById(Integer commentID) {
 		LOGGER.debug("Call find Comments by ID");
 		//Open  new session 
@@ -192,6 +197,7 @@ public class CommentDAOImpl implements ICommentDAO{
 		}
 	}
 
+	@Override
 	public List<Comments> findAll() {
 		LOGGER.debug("Call find  all Comments ");
 		//Open  new session 
@@ -222,6 +228,7 @@ public class CommentDAOImpl implements ICommentDAO{
 		}
 	}
 
+	@Override
 	public List<Comments> findByProperty(String name, Object proValue) {
 		LOGGER.debug("Call find Comments fit property condition");
 		//Open session

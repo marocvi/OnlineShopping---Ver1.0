@@ -41,6 +41,7 @@ public class LoginController extends HttpServlet {
 	private IWishListService wishlistService;
 	private Logger LOGGER;
 
+	@Override
 	public void init() {
 		// Get sessonFactory from context
 		sessionFactory = (SessionFactory) getServletContext().getAttribute("sessionFactory");
@@ -58,6 +59,7 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 	}
@@ -66,20 +68,21 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		// Check If Information correct then go to homepage else back to login page
 		HashMap<String, String> error = userService.validateUserInfor(request);
 		Users user = userService.getUserFromRequest(request);
-		// Encryp User's Information
+		// Encryp User's Information to check password user enter to compare in DB
 		EncryptUtil encrypt = new EncryptUtilImpl();
 		user.setPasswords(encrypt.encryptMD5(user.getPasswords()));
 		if (!userService.authenticate(user.getEmail(), user.getPasswords()) && !user.getEmail().equals("")
 				&& !user.getPasswords().equals("d41d8cd98f00b204e9800998ecf8427e")) {
 			error.put("auth", "Your email or password enterd are wrong. Please try again!");
 		}
-
+		//If there is any error we will handling it.
 		if (error.size() > 0) {
 			// Set error back to page
 			request.setAttribute("error", error);
@@ -95,7 +98,7 @@ public class LoginController extends HttpServlet {
 
 			// Get user from DB
 			user = userService.getUserByEmail(user.getEmail());
-			// Create new token for user
+			// Create new token for user for next login.
 			String token = UUID.randomUUID().toString();
 			// Save token with user
 			user.setToken(token);

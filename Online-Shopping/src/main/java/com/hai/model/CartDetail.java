@@ -1,6 +1,5 @@
 package com.hai.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,12 +21,12 @@ public class CartDetail {
 	private int amount;
 	
 	//Map to product
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(nullable=false, name = "Product_ID")
 	private Product product;
 	
 	//Map to cart
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name = "Cart_ID", nullable = false)
 	private Cart cart;
 

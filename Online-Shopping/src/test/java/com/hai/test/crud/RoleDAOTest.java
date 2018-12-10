@@ -61,7 +61,7 @@ public class RoleDAOTest {
 	
 	@Test //ok
 	public void testFindByProperty() {
-		assertEquals(1, roleDAO.findByProperty("role","Admin").size());
+		assertEquals(1, roleDAO.findByProperty("Role","Normal").size());
 	}
 	
 }

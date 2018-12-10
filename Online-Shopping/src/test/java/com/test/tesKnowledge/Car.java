@@ -1,13 +1,11 @@
 package com.test.tesKnowledge;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -18,8 +16,11 @@ public class Car {
 	@Column(name  = "Car_Id")
 	private int id;
 	private String engine;
-	@ManyToOne(cascade = CascadeType.ALL)
+
+	@ManyToOne
+	@JoinColumn(name="employeID")
 	private Employee employee;
+	private int ammount;
 	public int getId() {
 		return id;
 	}
@@ -38,5 +39,11 @@ public class Car {
 //	public void setEmployee(Employee employee) {
 //		this.employee = employee;
 //	}
+	public int getAmmount() {
+		return ammount;
+	}
+	public void setAmmount(int ammount) {
+		this.ammount = ammount;
+	}
 	
 }

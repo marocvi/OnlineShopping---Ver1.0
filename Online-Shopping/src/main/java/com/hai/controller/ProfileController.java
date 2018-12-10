@@ -36,6 +36,7 @@ public class ProfileController extends HttpServlet {
 	private CookieUtil cookieUtil;
 	private Logger LOGGER;
 
+	@Override
 	public void init() {
 		// Get sessonFactory from context
 		sessionFactory = (SessionFactory) getServletContext().getAttribute("sessionFactory");
@@ -55,6 +56,7 @@ public class ProfileController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
@@ -105,7 +107,7 @@ public class ProfileController extends HttpServlet {
 					// Update new password to DB
 					userService.updateUser(user);
 					// Send email to User to notify 
-					emailUtil.setToEmail(user.getEmail()).setPurpose(EmailPurpose.CHANGE_PASS).send();
+					emailUtil.setFromEmail("marocvi89@gmail.com").setToEmail(user.getEmail()).setPurpose(EmailPurpose.CHANGE_PASS).send();
 					// Redirect to change password page
 					String msg = "Your password has sucessfully update.";
 					response.sendRedirect("profile?action=view&choice=cpassword&message=" + msg);
@@ -115,20 +117,24 @@ public class ProfileController extends HttpServlet {
 			case "closeAccount":
 				// Change login status to Close
 				user.setLoginStatus(LoginStatus.CLOSE.toString());
+				//Delete Token
+				user.setToken("");
 				userService.updateUser(user);
 				// Send email to manager
 
 				emailUtil.setFromEmail("marocvi89@gmail.com").setPurpose(EmailPurpose.CLOSE_ACCOUNT)
 						.setToEmail(user.getEmail()).send();
 				//Delete cookies
-					cookieUtil.deleteCookie("loginID", request);
+				cookieUtil.deleteCookie("loginID",request, response);
 				response.sendRedirect("home");
+			
 				break;
 			}
 		} else
 			response.sendRedirect("home");
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub

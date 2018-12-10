@@ -18,15 +18,18 @@ public class EmailUtilImpl implements EmailUtil {
 		emailContent = new EmailContent();
 	}
 
+	@Override
 	public EmailUtilImpl setToEmail(String email)    {
 		emailContent.setToEmail(email);
 		return this;
 	}
+	@Override
 	public EmailUtilImpl setFromEmail(String fromEmail) {
 		emailContent.setFromEmail(fromEmail);
 		return this;
 		
 	}
+	@Override
 	public EmailUtilImpl setPurpose(EmailPurpose purpose) {
 		String message = "";
 		String subject = "";
@@ -55,11 +58,13 @@ public class EmailUtilImpl implements EmailUtil {
 		
 		return this;
 	}
+	@Override
 	public EmailUtilImpl setVerifyID(String verifyID) {
 		emailContent.setVerifyID(verifyID);
 		return this;
 	}
 
+	@Override
 	public Email send()   {
 		//Send Email
 		try {
@@ -97,6 +102,8 @@ public class EmailUtilImpl implements EmailUtil {
 		String toEmail;
 		String verifyID;
 		String subject;
+		
+		
 		public String getMessage() {
 			return message;
 		}

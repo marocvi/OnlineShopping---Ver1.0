@@ -1,16 +1,15 @@
 package com.test.tesKnowledge;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.SelectBeforeUpdate;
 
 @Entity
 public class Employee {
@@ -21,8 +20,10 @@ public class Employee {
 	
 	private int id;
 	private String name;
-	@OneToMany( cascade = CascadeType.ALL, mappedBy= "employee")
-	private List<Car> cars ;
+	
+	@OneToMany(mappedBy="employee")
+	@MapKeyColumn(name="Car_Id")
+	private Map<Integer,Car> cars = new HashMap<>();
 	public int getId() {
 		return id;
 	}
@@ -35,11 +36,14 @@ public class Employee {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<Car> getCars() {
+	public Map<Integer, Car> getCars() {
 		return cars;
 	}
-	public void setCars(List<Car> cars) {
+	public void setCars(Map<Integer, Car> cars) {
 		this.cars = cars;
 	}
+
+	
+	
 	
 }

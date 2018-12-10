@@ -1,7 +1,6 @@
 package com.hai.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,10 +28,7 @@ public class Cart {
 	@Column(name = "Amount_Total")
 	private int amountTotal;
 	
-	//Map to Guest
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "Guest_ID", unique = true)
-	private Guest guest;
+
 	
 	//Map to  user
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -40,7 +37,16 @@ public class Cart {
 	
 	//Map to Cart_Detail
 	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-	private List<CartDetail> cartDetails = new ArrayList<CartDetail>();
+	@MapKeyJoinColumn(name="Product_ID")
+	private Map<Product,CartDetail > cartDetails ;
+
+	public Map<Product, CartDetail> getCartDetails() {
+		return cartDetails;
+	}
+
+	public void setCartDetails(Map<Product, CartDetail> cartDetails) {
+		this.cartDetails = cartDetails;
+	}
 
 	public int getId() {
 		return id;
@@ -66,14 +72,7 @@ public class Cart {
 		this.amountTotal = amountTotal;
 	}
 
-	public Guest getGuest() {
-		return guest;
-	}
-
-	public void setGuest(Guest guest) {
-		this.guest = guest;
-	}
-
+	
 	public Users getUser() {
 		return user;
 	}
@@ -82,13 +81,8 @@ public class Cart {
 		this.user = user;
 	}
 
-	public List<CartDetail> getCartDetails() {
-		return cartDetails;
-	}
 
-	public void setCartDetails(List<CartDetail> cartDetails) {
-		this.cartDetails = cartDetails;
-	}
-	
+
+
 	
 }

@@ -39,6 +39,7 @@ public class OrderDetailDAOImpl implements IOrderDetailDAO{
 	}
 	
 	
+	@Override
 	public boolean save(OrderDetail orderDetail) {
 		LOGGER.debug("Call save OrderDetail");
 		//Open  new session 
@@ -69,6 +70,7 @@ public class OrderDetailDAOImpl implements IOrderDetailDAO{
 		
 	}
 
+	@Override
 	public boolean update(OrderDetail orderDetail) {
 		LOGGER.debug("Call update OrderDetail");
 		//Open  new session 
@@ -97,6 +99,7 @@ public class OrderDetailDAOImpl implements IOrderDetailDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(OrderDetail orderDetail) {
 		LOGGER.debug("Call delete OrderDetail");
 		//Open  new session 
@@ -126,6 +129,7 @@ public class OrderDetailDAOImpl implements IOrderDetailDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(Integer subCartgoryID) {
 		
 		LOGGER.debug("Call delete OrderDetail");
@@ -160,6 +164,7 @@ public class OrderDetailDAOImpl implements IOrderDetailDAO{
 		}
 	}
 
+	@Override
 	public OrderDetail findById(Integer orderDetailID) {
 		LOGGER.debug("Call find OrderDetail by ID");
 		//Open  new session 
@@ -192,6 +197,7 @@ public class OrderDetailDAOImpl implements IOrderDetailDAO{
 		}
 	}
 
+	@Override
 	public List<OrderDetail> findAll() {
 		LOGGER.debug("Call find  all OrderDetail ");
 		//Open  new session 
@@ -222,6 +228,7 @@ public class OrderDetailDAOImpl implements IOrderDetailDAO{
 		}
 	}
 
+	@Override
 	public List<OrderDetail> findByProperty(String name, Object proValue) {
 		LOGGER.debug("Call find OrderDetail fit property condition");
 		//Open session

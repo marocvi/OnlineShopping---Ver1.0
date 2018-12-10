@@ -245,14 +245,6 @@
 	</script>
 			</div>
 		</div>
-		<ul class="start">
-			<li><a href="#"><i></i></a></li>
-			<li><span>1</span></li>
-			<li class="arrow"><a href="#">2</a></li>
-			<li class="arrow"><a href="#">3</a></li>
-			<li class="arrow"><a href="#">4</a></li>
-			<li class="arrow"><a href="#">5</a></li>
-			<li><a href="#"><i class="next"> </i></a></li>
-		</ul>
+		
 	</div>
 </div>

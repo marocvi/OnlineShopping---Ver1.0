@@ -39,6 +39,7 @@ public class CartDetailDAOImpl implements ICartDetailDAO{
 	}
 	
 	
+	@Override
 	public boolean save(CartDetail cartDetail) {
 		LOGGER.debug("Call save CartDetail");
 		//Open  new session 
@@ -69,6 +70,7 @@ public class CartDetailDAOImpl implements ICartDetailDAO{
 		
 	}
 
+	@Override
 	public boolean update(CartDetail cartDetail) {
 		LOGGER.debug("Call update CartDetail");
 		//Open  new session 
@@ -97,6 +99,7 @@ public class CartDetailDAOImpl implements ICartDetailDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(CartDetail cartDetail) {
 		LOGGER.debug("Call delete CartDetail");
 		//Open  new session 
@@ -126,6 +129,7 @@ public class CartDetailDAOImpl implements ICartDetailDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(Integer subCartDetailgoryID) {
 		
 		LOGGER.debug("Call delete CartDetail");
@@ -160,6 +164,7 @@ public class CartDetailDAOImpl implements ICartDetailDAO{
 		}
 	}
 
+	@Override
 	public CartDetail findById(Integer cartDetailID) {
 		LOGGER.debug("Call find CartDetail by ID");
 		//Open  new session 
@@ -192,6 +197,7 @@ public class CartDetailDAOImpl implements ICartDetailDAO{
 		}
 	}
 
+	@Override
 	public List<CartDetail> findAll() {
 		LOGGER.debug("Call find  all CartDetail ");
 		//Open  new session 
@@ -222,6 +228,7 @@ public class CartDetailDAOImpl implements ICartDetailDAO{
 		}
 	}
 
+	@Override
 	public List<CartDetail> findByProperty(String name, Object proValue) {
 		LOGGER.debug("Call find CartDetail fit property condition");
 		//Open session

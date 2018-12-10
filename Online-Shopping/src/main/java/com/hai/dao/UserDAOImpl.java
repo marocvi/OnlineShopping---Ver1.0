@@ -40,6 +40,7 @@ public class UserDAOImpl implements IUserDAO {
 		LOGGER = Logger.getLogger(SubcategoryDAOImpl.class);
 	}
 
+	@Override
 	public boolean save(Users user) {
 		LOGGER.debug("Call save Users");
 		// Open new session
@@ -68,6 +69,7 @@ public class UserDAOImpl implements IUserDAO {
 
 	}
 
+	@Override
 	public boolean update(Users user) {
 		LOGGER.debug("Call update Users");
 		// Open new session
@@ -94,6 +96,7 @@ public class UserDAOImpl implements IUserDAO {
 		}
 	}
 
+	@Override
 	public boolean delete(Users user) {
 		LOGGER.debug("Call delete Users");
 		// Open new session
@@ -121,6 +124,7 @@ public class UserDAOImpl implements IUserDAO {
 		}
 	}
 
+	@Override
 	public boolean delete(Integer subCartgoryID) {
 
 		LOGGER.debug("Call delete Users");
@@ -153,6 +157,7 @@ public class UserDAOImpl implements IUserDAO {
 		}
 	}
 
+	@Override
 	public Users findById(Integer userID) {
 		LOGGER.debug("Call find Users by ID");
 		// Open new session
@@ -183,6 +188,7 @@ public class UserDAOImpl implements IUserDAO {
 		}
 	}
 
+	@Override
 	public List<Users> findAll() {
 		LOGGER.debug("Call find  all Users ");
 		// Open new session
@@ -211,6 +217,7 @@ public class UserDAOImpl implements IUserDAO {
 		}
 	}
 
+	@Override
 	public List<Users> findByProperty(String name, Object proValue) {
 		LOGGER.debug("Call find Users fit property condition");
 		// Check proValue

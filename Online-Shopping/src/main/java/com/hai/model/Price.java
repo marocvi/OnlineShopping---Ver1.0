@@ -29,10 +29,10 @@ public class Price {
 	private Product product;
 	private Double unitPrice;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "Start_Date")
+	@Column(name = "Start_Date",length=20)
 	private Date startDate;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "End_Date")
+	@Column(name = "End_Date",length=20)
 	private Date endDate;
 
 	//Getter and setter

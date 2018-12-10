@@ -87,20 +87,24 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public boolean verifyUser(String verifyID) {
+	public Users verifyUser(String verifyID) {
 		List<Users> listOfUser = userDAO.findByProperty("verifyID", verifyID);
+		Users user = null;
 		if (listOfUser != null && listOfUser.size() >= 1) {
 
-			for (Users user : listOfUser) {
-				user.setCreateDate(new Date());
-				user.setLoginStatus(LoginStatus.ACTIVE.toString());
-				user.setVerifyID("");
-				userDAO.update(user);
+			for (Users tempUser : listOfUser) {
+				tempUser.setCreateDate(new Date());
+				tempUser.setLoginStatus(LoginStatus.ACTIVE.toString());
+				tempUser.setCreateDate(new Date());
+				tempUser.setVerifyID("");
+				userDAO.update(tempUser);
+				user = tempUser;
+				break;
 			}
-			return true;
-		} else {
-			return false;
+			
 		}
+		return user;
+
 	}
 
 	@Override
@@ -173,17 +177,22 @@ public class UserServiceImpl implements IUserService {
 			error.put("retypePassword", "Please re-enter password");
 		}
 		if (!request.getParameter("newPassword").equals(request.getParameter("retypePassword"))
-				&&error.get("newPassword")==null&error.get("retypePassword")==null) {
+				&& error.get("newPassword") == null & error.get("retypePassword") == null) {
 			error.put("notMatch", "Your password you re-enter is not match");
 		}
 
-		if (!password.equals(user.getPasswords()) && !password.equals("d41d8cd98f00b204e9800998ecf8427e")) {
+		if (!password.equals(user.getPasswords()) && !password.equals("d41d8cd98f00b204e9800998ecf8427e")
+				&& error.get("newPassword") == null & error.get("retypePassword") == null) {
 			error.put("incorrectPassword", "Your old password is incorrect. Please try again");
 		}
 
 		return error;
-		
-		}
-	
+
+	}
+
+	@Override
+	public List<Users> getUserByProperty(String name, Object proValue) {
+		return userDAO.findByProperty(name, proValue);
+	}
 
 }

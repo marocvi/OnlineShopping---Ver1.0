@@ -39,6 +39,7 @@ public class RoleDAOImpl implements IRoleDAO{
 	}
 	
 	
+	@Override
 	public boolean save(Role role) {
 		LOGGER.debug("Call save Role");
 		//Open  new session 
@@ -69,6 +70,7 @@ public class RoleDAOImpl implements IRoleDAO{
 		
 	}
 
+	@Override
 	public boolean update(Role role) {
 		LOGGER.debug("Call update Role");
 		//Open  new session 
@@ -97,6 +99,7 @@ public class RoleDAOImpl implements IRoleDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(Role role) {
 		LOGGER.debug("Call delete Role");
 		//Open  new session 
@@ -126,6 +129,7 @@ public class RoleDAOImpl implements IRoleDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(Integer subCartgoryID) {
 		
 		LOGGER.debug("Call delete Role");
@@ -160,6 +164,7 @@ public class RoleDAOImpl implements IRoleDAO{
 		}
 	}
 
+	@Override
 	public Role findById(Integer roleID) {
 		LOGGER.debug("Call find Role by ID");
 		//Open  new session 
@@ -192,6 +197,7 @@ public class RoleDAOImpl implements IRoleDAO{
 		}
 	}
 
+	@Override
 	public List<Role> findAll() {
 		LOGGER.debug("Call find  all Role ");
 		//Open  new session 
@@ -222,6 +228,7 @@ public class RoleDAOImpl implements IRoleDAO{
 		}
 	}
 
+	@Override
 	public List<Role> findByProperty(String name, Object proValue) {
 		LOGGER.debug("Call find Role fit property condition");
 		//Open session

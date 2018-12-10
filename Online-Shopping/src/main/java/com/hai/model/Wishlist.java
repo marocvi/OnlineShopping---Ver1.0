@@ -25,10 +25,6 @@ public class Wishlist {
 	@JoinColumn(name="Product_ID", nullable = false )
 	private Product product;
 	
-	//Mapp to Guest
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="Guest_ID")
-	private Guest guest;
 	
 	//Mapp to User
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -54,13 +50,6 @@ public class Wishlist {
 		this.product = product;
 	}
 
-	public Guest getGuest() {
-		return guest;
-	}
-
-	public void setGuest(Guest guest) {
-		this.guest = guest;
-	}
 
 	public Users getUser() {
 		return user;

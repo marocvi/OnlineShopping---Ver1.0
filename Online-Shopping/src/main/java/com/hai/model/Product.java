@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,9 @@ public class Product {
 	private String size;
 	private String color;
 	private String description;
-	private byte[] image;
+	@Column(name="image_name")
+	private String imageName;
+	private String brand;
 
 	// Map to Subcategory
 	@ManyToOne (cascade = CascadeType.ALL)
@@ -45,7 +48,7 @@ public class Product {
 	private List<Supplier> suppliers;
 
 	// Map to List
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL,fetch= FetchType.EAGER)
 	private List<Price> prices;
 
 	// Map to wishlist
@@ -69,8 +72,12 @@ public class Product {
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<ImportDetail> importDetails ;
 	
+	
+	//Map to Comment
+	@OneToMany(cascade = CascadeType.ALL,orphanRemoval= true, mappedBy="product")
+	private List<Comments> comments;
+	
 	// Getter and setter
-
 	public List<ExportDetail> getExportDetails() {
 		return exportDetails;
 	}
@@ -185,12 +192,30 @@ public class Product {
 		this.cartDetails = cartDetails;
 	}
 
-	public byte[] getImage() {
-		return image;
+
+
+	public String getImageName() {
+		return imageName;
 	}
 
-	public void setImage(byte[] image) {
-		this.image = image;
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+
+	public List<Comments> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comments> comments) {
+		this.comments = comments;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
 	}
 
 }

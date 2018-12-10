@@ -11,7 +11,6 @@ import org.junit.Test;
 import com.hai.dao.CartDAOImpl;
 import com.hai.idao.ICartDAO;
 import com.hai.model.Cart;
-import com.hai.model.Guest;
 import com.hai.util.SessionFactoryBuilderUtil;
 
 public class CartDAOTest {
@@ -30,7 +29,6 @@ public class CartDAOTest {
 	public void testSave() {
 		Cart cart = new Cart();
 		cart.setAmountTotal(9);
-		cart.setGuest(new Guest());
 		cart.setMoneyTotal(56000);
 		cartDAO.save(cart);
 	}

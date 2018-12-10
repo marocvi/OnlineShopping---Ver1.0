@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -6,8 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Bonfire a Ecommerce Category Flat Bootstarp Responsive
-	Website Template | Home :: w3layouts</title>
+<title>Online_Shopping</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css"
 	media="all" />
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

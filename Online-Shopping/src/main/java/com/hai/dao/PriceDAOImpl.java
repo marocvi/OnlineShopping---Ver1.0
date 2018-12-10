@@ -39,6 +39,7 @@ public class PriceDAOImpl implements IPriceDAO{
 	}
 	
 	
+	@Override
 	public boolean save(Price price) {
 		LOGGER.debug("Call save Price");
 		//Open  new session 
@@ -69,6 +70,7 @@ public class PriceDAOImpl implements IPriceDAO{
 		
 	}
 
+	@Override
 	public boolean update(Price price) {
 		LOGGER.debug("Call update Price");
 		//Open  new session 
@@ -97,6 +99,7 @@ public class PriceDAOImpl implements IPriceDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(Price price) {
 		LOGGER.debug("Call delete Price");
 		//Open  new session 
@@ -126,6 +129,7 @@ public class PriceDAOImpl implements IPriceDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(Integer subCartgoryID) {
 		
 		LOGGER.debug("Call delete Price");
@@ -160,6 +164,7 @@ public class PriceDAOImpl implements IPriceDAO{
 		}
 	}
 
+	@Override
 	public Price findById(Integer priceID) {
 		LOGGER.debug("Call find Price by ID");
 		//Open  new session 
@@ -192,6 +197,7 @@ public class PriceDAOImpl implements IPriceDAO{
 		}
 	}
 
+	@Override
 	public List<Price> findAll() {
 		LOGGER.debug("Call find  all Price ");
 		//Open  new session 
@@ -222,6 +228,7 @@ public class PriceDAOImpl implements IPriceDAO{
 		}
 	}
 
+	@Override
 	public List<Price> findByProperty(String name, Object proValue) {
 		LOGGER.debug("Call find Price fit property condition");
 		//Open session

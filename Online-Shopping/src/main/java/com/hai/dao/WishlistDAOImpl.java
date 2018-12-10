@@ -39,6 +39,7 @@ public class WishlistDAOImpl implements IWishlistDAO{
 	}
 	
 	
+	@Override
 	public boolean save(Wishlist wishlist) {
 		LOGGER.debug("Call save Wishlist");
 		//Open  new session 
@@ -69,6 +70,7 @@ public class WishlistDAOImpl implements IWishlistDAO{
 		
 	}
 
+	@Override
 	public boolean update(Wishlist wishlist) {
 		LOGGER.debug("Call update Wishlist");
 		//Open  new session 
@@ -97,6 +99,7 @@ public class WishlistDAOImpl implements IWishlistDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(Wishlist wishlist) {
 		LOGGER.debug("Call delete Wishlist");
 		//Open  new session 
@@ -126,6 +129,7 @@ public class WishlistDAOImpl implements IWishlistDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(Integer subCartgoryID) {
 		
 		LOGGER.debug("Call delete Wishlist");
@@ -160,6 +164,7 @@ public class WishlistDAOImpl implements IWishlistDAO{
 		}
 	}
 
+	@Override
 	public Wishlist findById(Integer wishlistID) {
 		LOGGER.debug("Call find Wishlist by ID");
 		//Open  new session 
@@ -192,6 +197,7 @@ public class WishlistDAOImpl implements IWishlistDAO{
 		}
 	}
 
+	@Override
 	public List<Wishlist> findAll() {
 		LOGGER.debug("Call find  all Wishlist ");
 		//Open  new session 
@@ -222,6 +228,7 @@ public class WishlistDAOImpl implements IWishlistDAO{
 		}
 	}
 
+	@Override
 	public List<Wishlist> findByProperty(String name, Object proValue) {
 		LOGGER.debug("Call find Wishlist fit property condition");
 		//Open session

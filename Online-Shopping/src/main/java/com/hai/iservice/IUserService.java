@@ -1,6 +1,7 @@
 package com.hai.iservice;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,7 +38,7 @@ public interface IUserService {
 	 * @param verifyID
 	 * @return
 	 */
-	public boolean verifyUser(String verifyID) ;
+	public Users verifyUser(String verifyID) ;
 	/**
 	 * This function for authentication of user's information 
 	 * Check whether user verified or not.
@@ -56,11 +57,12 @@ public interface IUserService {
 	 * @return
 	 */
 	public Users getUserByEmail(String email);
-	
+
 	/**
 	 * @see com.hai.idao.IUserDAO#update(Users)
 	 * @param user
 	 */
+	
 	public void updateUser(Users user);
 	
 	/**
@@ -75,6 +77,9 @@ public interface IUserService {
 	 * @return
 	 */
 	public HashMap<String, String> validateChangePassword(HttpServletRequest request);
+	
+	
+	public List<Users> getUserByProperty(String name, Object proValue);
 	
 	
 	

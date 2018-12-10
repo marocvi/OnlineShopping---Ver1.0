@@ -15,16 +15,11 @@ public class Test {
 		ss.setHibernateFlushMode(FlushMode.MANUAL);
 		ss.beginTransaction();
 		//Code go here
-		Employee em2 = new Employee();
-		em2.setName("hai");
-		ss.persist(em2);
+		
 		ss.flush();
-		em2.setName("goi ten");
-		ss.flush();
-		System.out.println("before flush");
+	
 		
 		ss.getTransaction().commit();
-		System.out.println("Transaction comit");
 		ss.close();
 		System.out.println("close session");
 	}

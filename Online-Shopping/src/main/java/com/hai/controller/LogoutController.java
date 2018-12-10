@@ -12,13 +12,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 
-import com.hai.iservice.ICartService;
 import com.hai.iservice.IUserService;
-import com.hai.iservice.IWishListService;
 import com.hai.model.Users;
-import com.hai.service.CartServiceImpl;
 import com.hai.service.UserServiceImpl;
-import com.hai.service.WishlistServiceImpl;
 
 /**
  * Delete user form cookies,session Delete cart, wishlist Direct to Hompage
@@ -30,6 +26,7 @@ public class LogoutController extends HttpServlet {
 	private IUserService userService;
 	private Logger LOGGER;
 
+	@Override
 	public void init() {
 		// Get sessonFactory from context
 		sessionFactory = (SessionFactory) getServletContext().getAttribute("sessionFactory");
@@ -52,6 +49,7 @@ public class LogoutController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
@@ -92,6 +90,7 @@ public class LogoutController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub

@@ -42,6 +42,7 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		LOGGER = Logger.getLogger(CategoryDAOImpl.class.getName());
 	}
 	
+	@Override
 	public boolean save(Category category) {
 		LOGGER.debug("Call method for saving Category into DB");
 		//Open new session
@@ -72,6 +73,7 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		
 	}
 
+	@Override
 	public boolean update(Category category) {
 		LOGGER.debug("Call update Category method");
 		//Open new session
@@ -103,6 +105,7 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		return true;
 	}
 
+	@Override
 	public boolean delete(Category category) {
 		LOGGER.debug("Call delete Category");
 		//Open new session
@@ -133,6 +136,7 @@ public class CategoryDAOImpl implements ICategoryDAO{
 	 * This method delete category by id using query. No need Flusing
 	 * @param cartgoryID 
 	 */
+	@Override
 	public boolean delete(Integer cartgoryID) {
 		LOGGER.debug("Call delete Category ");
 		//Open session
@@ -158,6 +162,7 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		}
 	}
 
+	@Override
 	public Category findById(Integer categoryID) {
 		LOGGER.debug("Call find Category by ID");
 		//Open session
@@ -183,6 +188,7 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		return category;
 	}
 
+	@Override
 	public List<Category> findAll() {
 		LOGGER.debug("Call find all Categories in DB");
 		//Open session
@@ -208,6 +214,7 @@ public class CategoryDAOImpl implements ICategoryDAO{
 		return categories;
 	}
 
+	@Override
 	public List<Category> findByProperty(String name, Object proValue) {
 		LOGGER.debug("Call find Category fit property condition");
 		//Open session

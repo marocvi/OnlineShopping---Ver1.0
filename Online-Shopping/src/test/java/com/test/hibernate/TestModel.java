@@ -10,7 +10,6 @@ import com.hai.model.Category;
 import com.hai.model.Comments;
 import com.hai.model.Export;
 import com.hai.model.ExportDetail;
-import com.hai.model.Guest;
 import com.hai.model.Import;
 import com.hai.model.ImportDetail;
 import com.hai.model.Order;
@@ -31,12 +30,11 @@ public class TestModel {
 		Configuration configuration = new Configuration().configure().addAnnotatedClass(Users.class)
 				.addAnnotatedClass(Role.class).addAnnotatedClass(UserRole.class).addAnnotatedClass(Comments.class)
 				.addAnnotatedClass(Category.class).addAnnotatedClass(SubCategory.class).addAnnotatedClass(Product.class)
-				.addAnnotatedClass(Supplier.class).addAnnotatedClass(Price.class)
-				.addAnnotatedClass(Guest.class).addAnnotatedClass(Wishlist.class)
-				.addAnnotatedClass(Cart.class).addAnnotatedClass(CartDetail.class)
-				.addAnnotatedClass(Order.class).addAnnotatedClass(OrderDetail.class)
-				.addAnnotatedClass(Export.class).addAnnotatedClass(ExportDetail.class)
-				.addAnnotatedClass(Import.class).addAnnotatedClass(ImportDetail.class).addAnnotatedClass(Payment.class);
+				.addAnnotatedClass(Supplier.class).addAnnotatedClass(Price.class).addAnnotatedClass(Wishlist.class)
+				.addAnnotatedClass(Cart.class).addAnnotatedClass(CartDetail.class).addAnnotatedClass(Order.class)
+				.addAnnotatedClass(OrderDetail.class).addAnnotatedClass(Export.class)
+				.addAnnotatedClass(ExportDetail.class).addAnnotatedClass(Import.class)
+				.addAnnotatedClass(ImportDetail.class).addAnnotatedClass(Payment.class);
 
 		SessionFactory sf = configuration.buildSessionFactory();
 //		
@@ -274,7 +272,6 @@ public class TestModel {
 		ss.beginTransaction();
 		// Code go here;
 //		ss.save(user);
-		
 
 		ss.getTransaction().commit();
 		ss.close();

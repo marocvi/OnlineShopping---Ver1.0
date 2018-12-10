@@ -39,6 +39,7 @@ public class SubcategoryDAOImpl implements ISubcategoryDAO{
 	}
 	
 	
+	@Override
 	public boolean save(SubCategory subCategory) {
 		LOGGER.debug("Call save SubCategory");
 		//Open  new session 
@@ -69,6 +70,7 @@ public class SubcategoryDAOImpl implements ISubcategoryDAO{
 		
 	}
 
+	@Override
 	public boolean update(SubCategory subCategory) {
 		LOGGER.debug("Call update SubCategory");
 		//Open  new session 
@@ -97,6 +99,7 @@ public class SubcategoryDAOImpl implements ISubcategoryDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(SubCategory subCateogry) {
 		LOGGER.debug("Call delete SubCategory");
 		//Open  new session 
@@ -126,6 +129,7 @@ public class SubcategoryDAOImpl implements ISubcategoryDAO{
 		}
 	}
 
+	@Override
 	public boolean delete(Integer subCartgoryID) {
 		
 		LOGGER.debug("Call delete SubCategory");
@@ -160,6 +164,7 @@ public class SubcategoryDAOImpl implements ISubcategoryDAO{
 		}
 	}
 
+	@Override
 	public SubCategory findById(Integer subCategoryID) {
 		LOGGER.debug("Call find SubCategory by ID");
 		//Open  new session 
@@ -192,6 +197,7 @@ public class SubcategoryDAOImpl implements ISubcategoryDAO{
 		}
 	}
 
+	@Override
 	public List<SubCategory> findAll() {
 		LOGGER.debug("Call find  all SubCategory ");
 		//Open  new session 
@@ -222,6 +228,7 @@ public class SubcategoryDAOImpl implements ISubcategoryDAO{
 		}
 	}
 
+	@Override
 	public List<SubCategory> findByProperty(String name, Object proValue) {
 		LOGGER.debug("Call find SubCategory fit property condition");
 		//Open session

@@ -1,22 +1,26 @@
 <h2 class="">Change Your Password</h2>
-<p>
-	<c:out value="${param.message}"></c:out>
-</p>
-<p>
-	<c:out value="${error.newPassword}"></c:out>
-</p>
-<p>
-	<c:out value="${error.retypePassword}"></c:out>
-</p>
-<p>
-	<c:out value="${error.oldPassword}"></c:out>
-</p>
-<p>
-	<c:out value="${error.notMatch}"></c:out>
-</p>
-<p>
-	<c:out value="${error.incorrectPassword}"></c:out>
-</p>
+<div class="msg">
+	<p>
+		<c:out value="${param.message}"></c:out>
+	</p>
+</div>
+<div class="error">
+	<p>
+		<c:out value="${error.oldPassword}"></c:out>
+	</p>
+	<p>
+		<c:out value="${error.newPassword}"></c:out>
+	</p>
+	<p>
+		<c:out value="${error.retypePassword}"></c:out>
+	</p>
+	<p>
+		<c:out value="${error.notMatch}"></c:out>
+	</p>
+	<p>
+		<c:out value="${error.incorrectPassword}"></c:out>
+	</p>
+</div>
 
 <form class="" action="<c:url value='/profile'/>" method="post">
 	<label for="">Old Password</label><br> <input type="password"

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,8 +22,8 @@ public class Category {
 	private int id;
 	@Column(name = "Category_name")
 	private String name;
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-	List<SubCategory> subCategorys;
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	private	List<SubCategory> subCategories;
 
 	public int getId() {
 		return id;
@@ -40,12 +41,13 @@ public class Category {
 		this.name = name;
 	}
 
-	public List<SubCategory> getSubCategorys() {
-		return subCategorys;
+	public List<SubCategory> getSubCategories() {
+		return subCategories;
 	}
 
-	public void setSubCategorys(List<SubCategory> subCategorys) {
-		this.subCategorys = subCategorys;
+	public void setSubCategories(List<SubCategory> subCategories) {
+		this.subCategories = subCategories;
 	}
+
 
 }

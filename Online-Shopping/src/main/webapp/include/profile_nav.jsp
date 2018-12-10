@@ -141,6 +141,7 @@ section input[type=submit] {
 	-webkit-transition: all 0.3s;
 }
 
+
 section input[type=submit]:hover {
 	background-color: #34f9f3;
 	cursor: pointer;
@@ -149,6 +150,18 @@ section input[type=submit]:hover {
 section input[type=submit]:focus {
 	outline: none;
 }
+
+.error{
+	color:red;
+	margin-top: 30px;
+}
+
+
+.msg{
+	color: green;
+	margin-top: 30px;
+}
+
 </style>
 </head>
 <body>

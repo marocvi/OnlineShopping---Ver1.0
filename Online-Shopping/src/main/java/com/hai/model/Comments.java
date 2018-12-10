@@ -33,6 +33,11 @@ public class Comments {
 	@JoinColumn(name = "User_ID", nullable = false)
 	private Users user;
 	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name ="Product_ID",nullable= false)
+	private Product product;
+	
+	
 	
 	
 	
@@ -83,6 +88,14 @@ public class Comments {
 
 	public void setLikes(int likes) {
 		this.likes = likes;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	private int likes;

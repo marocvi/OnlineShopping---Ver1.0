@@ -1644,7 +1644,7 @@ p.cart a:hover {
 }
 /*----*/
 ul.start {
-	padding: 0em 0 14em 4em;
+	margin-top: 30px;
 }
 
 ul.start li {
