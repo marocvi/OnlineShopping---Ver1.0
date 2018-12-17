@@ -27,16 +27,19 @@ public class Product {
 	private int id;
 	@Column(name = "Product_Name")
 	private String name;
-	private int amount;
+	private int stock;
 	private String size;
 	private String color;
+	@Column(columnDefinition="TEXT")
 	private String description;
 	@Column(name="image_name")
-	private String imageName;
+	private String listOfImages;
 	private String brand;
+	@Column(name="profile_image")
+	private String profileImage;
 
 	// Map to Subcategory
-	@ManyToOne (cascade = CascadeType.ALL)
+	@ManyToOne (cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name = "SubCategory_ID")
 	private SubCategory subcategory;
 
@@ -144,12 +147,13 @@ public class Product {
 		this.prices = prices;
 	}
 
-	public int getAmount() {
-		return amount;
+	
+	public int getStock() {
+		return stock;
 	}
 
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 
 	public String getSize() {
@@ -191,15 +195,22 @@ public class Product {
 	public void setCartDetails(List<CartDetail> cartDetails) {
 		this.cartDetails = cartDetails;
 	}
-
-
-
-	public String getImageName() {
-		return imageName;
+	public String getListOfImages() {
+		return listOfImages;
 	}
 
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
+	public void setListOfImages(String listOfImages) {
+		this.listOfImages = listOfImages;
+	}
+
+	
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 
 	public List<Comments> getComments() {

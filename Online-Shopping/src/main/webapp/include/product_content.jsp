@@ -13,8 +13,8 @@
 			</c:if>
 			<div class="col-md-3 md-col">
 				<div class="col-md">
-					<a href="product_detail.jsp" class="compare-in"><img
-						src="images/${product.imageName}.jpg" alt="" />
+					<a href='<c:url value ="/product?action=detail&product_id=${product.id}"></c:url>' class="compare-in"><img
+						src="images/${product.profileImage}.jpg" alt="" />
 
 						<div class="top-content">
 							<h5>
@@ -79,48 +79,48 @@
 		<c:choose>
 			<%-- when the page greater than 7 --%>
 			<c:when test="${requestScope.numberOfPages>7}">
-				<li class="arrow"><a
+				<li class="arrow" id="page1"><a
 					href='<c:url value="/product?action=view&subcategoryid=${requestScope.subCategoryID}&page=1"/>'>1</a></li>
 				<c:choose>
 					<c:when test="${param.page <=3}">
-						<li class="arrow"><a
+						<li class="arrow" id="page2"><a
 							href='<c:url value="/product?action=view&subcategoryid=${requestScope.subCategoryID}&page=2"/>'>2</a>
 						</li>
-						<li class="arrow"><a
+						<li class="arrow" id="page3"><a
 							href='<c:url value="/product?action=view&subcategoryid=${requestScope.subCategoryID}&page=3"/>'>3</a>
 						</li>
-						<li class="arrow"><a
+						<li class="arrow" id="page4"><a
 							href='<c:url value="/product?action=view&subcategoryid=${requestScope.subCategoryID}&page=4"/>'>4</a>
 						</li>
 						<li class="arrow">....</li>
 					</c:when>
 					<c:when test="${param.page<=requestScope.numberOfPages-3}">
 						<li class="arrow">....</li>
-						<li class="arrow"><a
+						<li class="arrow" id="page${param.page-1}"><a
 							href='<c:url value="/product?action=view&subcategoryid=${requestScope.subCategoryID}&page=${param.page-1}"/>'>${param.page-1}</a>
 						</li>
-						<li class="arrow"><a
+						<li class="arrow" id="page${param.page}"><a
 							href='<c:url value="/product?action=view&subcategoryid=${requestScope.subCategoryID}&page=${param.page}"/>'>${param.page}</a>
 						</li>
-						<li class="arrow"><a
+						<li class="arrow" id="page${param.page+1}"><a
 							href='<c:url value="/product?action=view&subcategoryid=${requestScope.subCategoryID}&page=${param.page+1}"/>'>${param.page+1}</a>
 						</li>
 						<li class="arrow">....</li>
 					</c:when>
 					<c:otherwise>
 						<li class="arrow">....</li>
-						<li class="arrow"><a
+						<li class="arrow" id="page${requestScope.numberOfPages-3}"><a
 							href='<c:url value="/product?action=view&subcategoryid=${requestScope.subCategoryID}&page=${requestScope.numberOfPages-3}"/>'>${requestScope.numberOfPages-3}</a>
 						</li>
-						<li class="arrow"><a
+						<li class="arrow" id="page${requestScope.numberOfPages-2}"><a
 							href='<c:url value="/product?action=view&subcategoryid=${requestScope.subCategoryID}&page=${requestScope.numberOfPages-2}"/>'>${requestScope.numberOfPages-2}</a>
 						</li>
-						<li class="arrow"><a
+						<li class="arrow" id="page${requestScope.numberOfPages-1}"><a
 							href='<c:url value="/product?action=view&subcategoryid=${requestScope.subCategoryID}&page=${requestScope.numberOfPages-1}"/>'>${requestScope.numberOfPages-1}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
-				<li class="arrow"><a
+				<li class="arrow" id="page${requestScope.numberOfPages}"><a
 					href='<c:url value="/product?action=view&subcategoryid=${requestScope.subCategoryID}&page=${requestScope.numberOfPages}"/>'>${requestScope.numberOfPages}</a>
 				</li>
 			</c:when>
@@ -129,11 +129,9 @@
 				<%
 					for (int i = 1; i <= numberOfPages; i++) {
 				%>
-				<li class="arrow"><a
+				<li class="arrow " id="page"><a
 					href='<c:url value="/product?action=view&subcategoryid=${requestScope.subCategoryID}&page="/><%=i%>'><%=i%></a></li>
-				<%
-					}
-				%>
+				<%}%>
 			</c:otherwise>
 		</c:choose>
 		<%-- Set up next button --%>

@@ -1,26 +1,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!-- Header -->
 <div class="header">
 	<div class="header-top">
 		<div class="container">
 			<div class="header-top-in">
 				<div class="logo">
-					<a href='<c:url value="/home"></c:url>'><img src="images/logo.png" alt=" "></a>
-					
+					<a href='<c:url value="/home"></c:url>'><img
+						src="images/logo.png" alt=" "></a>
+
 				</div>
 				<div class="header-in">
 
 					<ul class="icon1 sub-icon1">
 						<li><a href="wishlist.html">WISH LIST (0)</a></li>
 						<c:choose>
-						<%--If user already login--%>
+							<%--If user already login--%>
 							<c:when test="${sessionScope.user!=null}">
 								<li><a href=" <c:url value= '/account?action=profile' /> ">MY
 										ACCOUNT</a></li>
 								<li><a href=" <c:url value= '/account?action=logout' /> ">LOGOUT</a></li>
 
 							</c:when>
-						<%-- If there is no user in session --%>
+							<%-- If there is no user in session --%>
 							<c:otherwise>
 								<li><a href=" <c:url value= '/account?action=register' /> ">SIGN
 										UP</a></li>
@@ -33,45 +35,36 @@
 						<li><a href="#"> SHOPPING CART</a></li>
 						<li><a href="checkout.html">CHECKOUT</a></li>
 						<li><div class="cart">
-								<a href="#" class="cart-in"> </a> <span> 0</span>
+								<a href="#" class="cart-in" onmouseover="scrollCart()"> </a> <span id="numberOfItems">${fn:length(cart.cartDetails)}</span>
 							</div>
 							<ul class="sub-icon1 list">
-								<h3>Recently added items(2)</h3>
-								<div class="shopping_cart">
-									<div class="cart_box">
-										<div class="message">
-											<div class="alert-close"></div>
-											<div class="list_img">
-												<img src="images/14.jpg" class="img-responsive" alt="">
+								<h3>Recently added items</h3>
+								<div id="shopping_cart">
+									<c:forEach var="item" items="${cart.cartDetails}">
+
+										<div class="cart_box" >
+											<div class="message">
+												<div class="list_img">
+													<img src="images/${item.product.profileImage}.jpg"
+														class="img-responsive" alt="">
+												</div>
+												<div class="list_desc">
+													<h4>
+														<a href="#">${item.product.name}</a>
+													</h4>
+													${item.amount} x<span class="actual"> ${item.money}</span>
+												</div>
+												<div class="clearfix"></div>
 											</div>
-											<div class="list_desc">
-												<h4>
-													<a href="#">velit esse molestie</a>
-												</h4>
-												1 x<span class="actual"> $12.00</span>
-											</div>
-											<div class="clearfix"></div>
 										</div>
-									</div>
-									<div class="cart_box1">
-										<div class="message1">
-											<div class="alert-close1"></div>
-											<div class="list_img">
-												<img src="images/15.jpg" class="img-responsive" alt="">
-											</div>
-											<div class="list_desc">
-												<h4>
-													<a href="#">velit esse molestie</a>
-												</h4>
-												1 x<span class="actual"> $12.00</span>
-											</div>
-											<div class="clearfix"></div>
-										</div>
-									</div>
+
+									</c:forEach>
+
+
 								</div>
 								<div class="total">
 									<div class="total_left">CartSubtotal :</div>
-									<div class="total_right">$250.00</div>
+									<div class="total_right">$${cart.moneyTotal}</div>
 									<div class="clearfix"></div>
 								</div>
 								<div class="login_buttons">
@@ -93,13 +86,15 @@
 			<div class="h_menu4">
 				<a class="toggleMenu" href="#">Menu</a>
 				<ul class="nav">
-					<li class="active"><a href='<c:url value="/home"></c:url>'><i> </i>Desktops</a></li>
+					<li class="active"><a href='<c:url value="/home"></c:url>'><i>
+						</i>Desktops</a></li>
 					<c:forEach var="category" items="${sessionScope.categories}">
 						<li><a href="#">${category.name}</a>
 							<ul class="drop">
 								<c:forEach var="subCategory" items="${category.subCategories}">
-									<li><a href='<c:url value="/product?action=view&subcategoryid=${subCategory.id}&page=1"></c:url>'>
-									${subCategory.name}</a></li>
+									<li><a
+										href='<c:url value="/product?action=view&subcategoryid=${subCategory.id}&page=1"></c:url>'>
+											${subCategory.name}</a></li>
 								</c:forEach>
 							</ul></li>
 					</c:forEach>

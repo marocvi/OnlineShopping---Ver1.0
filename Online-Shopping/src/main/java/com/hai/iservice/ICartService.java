@@ -1,6 +1,9 @@
 package com.hai.iservice;
 
+import java.util.List;
+
 import com.hai.model.Cart;
+import com.hai.model.CartDetail;
 
 public interface ICartService {
 
@@ -9,5 +12,7 @@ public interface ICartService {
 	 * @param cart
 	 */
 	public void update(Cart cart);
+	
+	public double getMoneyTotal(List<CartDetail> listOfItems);
 	
 }

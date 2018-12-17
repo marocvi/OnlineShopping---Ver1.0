@@ -30,6 +30,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--//fonts-->
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript" src="js/myScript.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
 		$(".scroll").click(function(event) {
@@ -71,12 +72,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		});
 	});
 </script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#page${param.page}').addClass('active');
+	})
+	
+</script>
 <style type="text/css">
 .disabled {
 	pointer-events: none;
 	cursor: default;
 	opacity: 0.6;
 }
+input.comment {
+	width: 500px;
+}
+
 </style>
 
 </head>

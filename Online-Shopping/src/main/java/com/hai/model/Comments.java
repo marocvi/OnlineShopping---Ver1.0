@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,13 +28,15 @@ public class Comments {
 	@Column(name = "Created_Date")
 	private Date createDate;
 	private byte rate;
+	@Column(name="User_Name")
+	private String userName;
 
 	// Create foreign key
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.MERGE,fetch=FetchType.LAZY)
 	@JoinColumn(name = "User_ID", nullable = false)
 	private Users user;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name ="Product_ID",nullable= false)
 	private Product product;
 	
@@ -96,6 +99,14 @@ public class Comments {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	private int likes;

@@ -1,2 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/com/hai/controller/ProductController.java=UTF-8
+encoding//src/main/webapp/include/header.jsp=UTF-8
+encoding//src/main/webapp/include/product_detail_content.jsp=UTF-8
 encoding//src/main/webapp/include/profile_nav.jsp=UTF-8

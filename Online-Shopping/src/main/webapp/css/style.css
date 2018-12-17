@@ -2289,3 +2289,7 @@ ul.start li a i.next {
 		width: 30%;
 	}
 }
+.shopping_cart{
+	height: 250px;
+	overflow-y:auto; 
+}

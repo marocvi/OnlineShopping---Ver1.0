@@ -1,164 +1,116 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"
+	isELIgnored="false"%>
 <div class="container">
-			<div class="single">
-				<div class="col-md-9 top-in-single">
-					<div class="col-md-5 single-top">	
-						<ul id="etalage">
-							<li>
-								<a href="optionallink.html">
-									<img class="etalage_thumb_image img-responsive" src="images/si1.jpg" alt="" >
-									<img class="etalage_source_image img-responsive" src="images/si1.jpg" alt="" >
-								</a>
-							</li>
-							<li>
-								<img class="etalage_thumb_image img-responsive" src="images/si2.jpg" alt="" >
-								<img class="etalage_source_image img-responsive" src="images/si2.jpg" alt="" >
-							</li>
-							<li>
-								<img class="etalage_thumb_image img-responsive" src="images/si.jpg" alt=""  >
-								<img class="etalage_source_image img-responsive" src="images/si.jpg" alt="" >
-							</li>
-						    <li>
-								<img class="etalage_thumb_image img-responsive" src="images/si1.jpg"  alt="" >
-								<img class="etalage_source_image img-responsive" src="images/si1.jpg" alt="" >
-							</li>
-						</ul>
+	<div class="single">
+		<div class="col-md-9 top-in-single">
+			<div class="col-md-5 single-top">
+				<ul id="etalage">
+					<c:forEach var="image" items="${listOfImages}">
+						<li><img class="etalage_thumb_image img-responsive"
+							src="images/${image}.jpg" alt=""> <img
+							class="etalage_source_image img-responsive"
+							src="images/${image}.jpg" alt=""></li>
+					</c:forEach>
+				</ul>
 
-					</div>	
-					<div class="col-md-7 single-top-in">
-						<div class="single-para">
-							<h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h4>
-							<div class="para-grid">
-								<span  class="add-to">$32.8</span>
-								<a href="#" class="hvr-shutter-in-vertical cart-to">Add to Cart</a>					
-								<div class="clearfix"></div>
-							 </div>
-							<h5>100 items in stock</h5>
-							<div class="available">
-								<h6>Available Options :</h6>
-								<ul>
-									<li>Color:
-										<select>
-										<option>Silver</option>
-										<option>Black</option>
-										<option>Dark Black</option>
-										<option>Red</option>
-									</select></li>
-								<li>Size:<select>
-									<option>Large</option>
-									<option>Medium</option>
-									<option>small</option>
-									<option>Large</option>
-									<option>small</option>
+			</div>
+				<div class="col-md-7 single-top-in">
+					<div class="single-para">
+						<h4>${product.name}</h4>
+						<div class="para-grid">
+							<span class="add-to" id="price">$${price}</span> 
+							<c:url value="/product" var="detailUrl">
+								<c:param name="action" value="detail"></c:param>
+								<c:param name="product_id" value="${param.product_id}"></c:param>
+							</c:url>
+							<a href="${detailUrl }" onclick="addToCart(${param.product_id})" class="hvr-shutter-in-vertical cart-to" id="addcart">Add to Cart</a>
+							<a href="#" class="hvr-shutter-in-vertical cart-to" id ="addwishlist" >Whislist</a>
+							<div class="clearfix"></div>
+						</div>
+						<h5 id="amount">${product.stock}</h5>
+						<div class="available">
+							<h6>Available Options :</h6>
+							<ul>
+								<li>Color: <select  id="color">
+										<c:forEach var="color" items="${listOfColors}">
+											<option>${color}</option>
+										</c:forEach>
+								</select>
+								</li>
+								<li>Size:<select id="size">
+										<c:forEach var="size" items="${listOfSizes}">
+											<option>${size}</option>
+										</c:forEach>
 								</select></li>
-								<li>Quality:<select>
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
-								</select></li>
+								<li>Quantity: <input type="number" id="quantity"
+									style="width: 50px; height: 24px;">
+								</li>
 							</ul>
 						</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-							
-								<a href="#" class="hvr-shutter-in-vertical ">More details</a>
-							
-						</div>
-					</div>
-				<div class="clearfix"> </div>
-				<div class="content-top-in">
-						<div class="col-md-4 top-single">
-							<div class="col-md">
-								<img  src="images/pic8.jpg" alt="" />	
-								<div class="top-content">
-									<h5>Mascot Kitty - White</h5>
-									<div class="white">
-										<a href="#" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2">ADD TO CART</a>
-										<p class="dollar"><span class="in-dollar">$</span><span>2</span><span>0</span></p>
-										<div class="clearfix"></div>
-									</div>
-								</div>							
-							</div>
-						</div>
-						<div class="col-md-4 top-single">
-							<div class="col-md">
-								<img  src="images/pic9.jpg" alt="" />	
-								<div class="top-content">
-									<h5>Mascot Kitty - White</h5>
-									<div class="white">
-										<a href="#" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2">ADD TO CART</a>
-										<p class="dollar"><span class="in-dollar">$</span><span>2</span><span>0</span></p>
-										<div class="clearfix"></div>
-									</div>
-								</div>							
-							</div>
-						</div>
-						<div class="col-md-4 top-single-in">
-							<div class="col-md">
-								<img  src="images/pic10.jpg" alt="" />	
-								<div class="top-content">
-									<h5>Mascot Kitty - White</h5>
-									<div class="white">
-										<a href="#" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2">ADD TO CART</a>
-										<p class="dollar"><span class="in-dollar">$</span><span>2</span><span>0</span></p>
-										<div class="clearfix"></div>
-									</div>
-								</div>							
-							</div>
-						</div>
-						
-					<div class="clearfix"></div>
+						<p>${product.description}</p>
+
 					</div>
 				</div>
-				<div class="col-md-3">
-					<div class="single-bottom">
-						<h4>Categories</h4>
-						<ul>
-						<li><a href="#"><i> </i>Fusce feugiat</a></li>
-						<li><a href="#"><i> </i>Mascot Kitty</a></li>
-						<li><a href="#"><i> </i>Fusce feugiat</a></li>
-						<li><a href="#"><i> </i>Mascot Kitty</a></li>
-						<li><a href="#"><i> </i>Fusce feugiat</a></li>
-						</ul>
-					</div>
-					<div class="single-bottom">
-						<h4>Product Categories</h4>
-						<ul>
-						<li><a href="#"><i> </i>feugiat(5)</a></li>
-						<li><a href="#"><i> </i>Fusce (4)</a></li>
-						<li><a href="#"><i> </i> feugiat (4)</a></li>
-						<li><a href="#"><i> </i>Fusce (4)</a></li>
-						<li><a href="#"><i> </i> feugiat(2)</a></li>
-						</ul>
-					</div>
-					<div class="single-bottom">
-						<h4>Product Categories</h4>
-							<div class="product">
-								<img class="img-responsive fashion" src="images/st1.jpg" alt="">
-							<div class="grid-product">
-								<a href="#" class="elit">Consectetuer adipiscing elit</a>
-								<span class="price price-in"><small>$500.00</small> $400.00</span>
-							</div>
-							<div class="clearfix"> </div>
-							</div>
-							<div class="product">
-								<img class="img-responsive fashion" src="images/st2.jpg" alt="">
-							<div class="grid-product">
-								<a href="#" class="elit">Consectetuer adipiscing elit</a>
-								<span class="price price-in"><small>$500.00</small> $400.00</span>
-							</div>
-							<div class="clearfix"> </div>
-							</div>
-							<div class="product">
-								<img class="img-responsive fashion" src="images/st3.jpg" alt="">
-							<div class="grid-product">
-								<a href="#" class="elit">Consectetuer adipiscing elit</a>
-								<span class="price price-in"><small>$500.00</small> $400.00</span>
-							</div>
-							<div class="clearfix"> </div>
-							</div>
+			<div class="clearfix"></div>
+			<div class="content-top-in">
+				<div class="comment">
+					<textarea rows="5" cols="100"
+						placeholder="Please enter your commnet..." id="content"></textarea>
+					<br>
+					<button type="submit" class="submit" onclick="submitComment()">Comment</button>
+					<ul id="commentList">
+						<c:forEach var="comment" items="${listOfComments}">
+							<h4>${comment.userName}</h4>
+							<li>${comment.content}</li>
+						</c:forEach>
+					</ul>
 				</div>
-				</div>
-				<div class="clearfix"> </div>
+				<div class="clearfix"></div>
+			</div>
 		</div>
+		<div class="col-md-3">
+			<div class="single-bottom">
+				<h4>SUBCATEGORIES</h4>
+
+				<ul>
+					<c:forEach var="subCategory" items="${listOfSubCategories}">
+						<li><a href='<c:url value="/product?action=view&subcategoryid=${subCategory.id}&page=1"></c:url>'><i> </i>${subCategory.name}</a></li>
+					</c:forEach>
+
+
+				</ul>
+			</div>
+			<div class="single-bottom">
+				<h4>RELATED PRODUCTS</h4>
+				<c:forEach var="product" items="${listOfProducts}">
+
+					<div class="product">
+						<img class="img-responsive fashion"
+							src="images/${product.profileImage}.jpg" alt="">
+						<div class="grid-product">
+							<a href='<c:url value="/product?action=detail&product_id=${product.id}"></c:url>' class="elit">${product.name}</a> <span
+								class="price price-in"> $ <c:forEach var="price"
+									items="${product.prices}">
+									<c:choose>
+										<c:when
+											test="${requestScope.today >= price.startDate.time && requestScope.today<= price.endDate.time}">
+											${price.unitPrice}"
+										</c:when>
+										<%-- There is no price comfort to condition --%>
+										<c:otherwise>
+											00
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</span>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+
+				</c:forEach>
+			</div>
+		</div>
+		<div class="clearfix"></div>
 	</div>
+</div>

@@ -1,5 +1,6 @@
 package com.hai.model;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -10,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,14 +37,14 @@ public class Cart {
 	
 	//Map to Cart_Detail
 	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-	@MapKeyJoinColumn(name="Product_ID")
-	private Map<Product,CartDetail > cartDetails ;
+	private List<CartDetail > cartDetails ;
 
-	public Map<Product, CartDetail> getCartDetails() {
+
+	public List<CartDetail> getCartDetails() {
 		return cartDetails;
 	}
 
-	public void setCartDetails(Map<Product, CartDetail> cartDetails) {
+	public void setCartDetails(List<CartDetail> cartDetails) {
 		this.cartDetails = cartDetails;
 	}
 

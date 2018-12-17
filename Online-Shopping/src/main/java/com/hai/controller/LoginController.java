@@ -107,7 +107,7 @@ public class LoginController extends HttpServlet {
 			String loginID = user.getEmail() + "_" + token;
 			// Save loginID to cookies for maintain next request.
 			Cookie loginCookie = new Cookie("loginID", loginID);
-			loginCookie.setMaxAge(60 * 24);
+			loginCookie.setMaxAge(60*60*24);
 			response.addCookie(loginCookie);
 			// Save user to sesssion as well
 			HttpSession session = request.getSession();

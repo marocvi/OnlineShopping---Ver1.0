@@ -9,5 +9,10 @@ public interface IProductService  {
 	public Integer getNumberOfProduct(int subCategoryID);
 	public List<Product> getAllProduct();
 	public List<Product> getProductByPage(int subCategoryID, int startPosition, int maxResult);
+	public Product getProductByID(int productID);
+	public List<Product> getListOfProductBySubCategory(int subCategoryID);
+	public double getValidPrice(Product product);
+	
+	
 	
 }

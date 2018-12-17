@@ -1,5 +1,7 @@
 package com.hai.config;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletRequestEvent;
@@ -12,11 +14,16 @@ import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 
 import com.hai.iservice.ICategoryService;
+import com.hai.iservice.IProductService;
 import com.hai.iservice.IUserService;
+import com.hai.model.Cart;
+import com.hai.model.CartDetail;
 import com.hai.model.Category;
 import com.hai.model.Users;
 import com.hai.model.Users.LoginStatus;
+import com.hai.model.Wishlist;
 import com.hai.service.CategoryServiceImpl;
+import com.hai.service.ProductServiceImpl;
 import com.hai.service.UserServiceImpl;
 
 /**
@@ -33,9 +40,12 @@ public class MyRequestListener implements ServletRequestListener {
 	private SessionFactory sessionFactory;
 	private IUserService userService;
 	private ICategoryService categoryService;
+	private IProductService productService;
 	private Logger LOGGER;
 
 	public MyRequestListener() {
+
+		;
 		LOGGER = Logger.getLogger(MyRequestListener.class.getName());
 	}
 
@@ -50,10 +60,15 @@ public class MyRequestListener implements ServletRequestListener {
 		sessionFactory = (SessionFactory) sre.getServletContext().getAttribute("sessionFactory");
 		userService = new UserServiceImpl(sessionFactory);
 		categoryService = new CategoryServiceImpl(sessionFactory);
+		productService = new ProductServiceImpl(sessionFactory);
+		
 		// Get request from ServletRequestEvent
 		HttpServletRequest request = (HttpServletRequest) sre.getServletRequest();
+
 		HttpSession session = request.getSession();
 		Users sessionUser = (Users) session.getAttribute("user");
+		Cart sessionCart = (Cart) session.getAttribute("cart");
+		Wishlist sessionWishlist = (Wishlist) session.getAttribute("wishlist");
 		Cookie[] cookies = request.getCookies();
 
 		/*
@@ -97,64 +112,71 @@ public class MyRequestListener implements ServletRequestListener {
 		}
 		/*
 		 * This code for add Category, cart, wishlist to session so from session we can
-		 * pick it up easier. When there is somthing changed we will update this. 
+		 * pick it up easier. When there is somthing changed we will update this.
 		 */
 
 		// Category
-		if (session.getAttribute("categories") == null){
+		if (session.getAttribute("categories") == null) {
 			List<Category> categories = categoryService.findAll();
 			session.setAttribute("categories", categories);
 			LOGGER.info("Add Categories in Session");
 		}
-		
+
 		/*
 		 * I'm going to divide into two case. 1. User not login yet and 2. User loingin
 		 * already
 		 * 
 		 */
 
-//		if(sessionUser==null) {
-//			if(cookies!=null) {
-//				for (Cookie cookie : cookies) {
-//					// Looking for cart cookies
-//					if(cookie.getName().equals("cartCookie")) {
-//						Cart cart = new Cart();
-//						HashMap<Product,CartDetail> item = new HashMap<>();
-//						
-//						//Cookies will have format: Product_id_Ammount:Product_id_Ammount:
-//						String cartCookie = cookie.getValue();
-//						String[] itemCookies = cartCookie.split(":");
-//						for (String itemCookie : itemCookies) {
-//							int productID = Integer.parseInt(itemCookie.split("_")[0]);
-//							int amount =   Integer.parseInt(itemCookie.split("_")[1]);
-//							//Get item
-//							CartDetail cartDetail = new CartDetail();
-//							cartDetail.setAmount(amount);
-//							cartDetail.setCart(cart);
-////							cartDetail.setProduct(productService.getProductByID(productID));
-//							
-//						}
-//						
-//						
-//						
-//						
-//						cart.setCartDetails(item);
-//						session.setAttribute("cart", cart);
-//					}
-//					
-//					//Looking for wishlist cookies
-//					if(cookie.getName().equals("cartCookie")) {
-//						String cartCookie = cookie.getName();
-//						HashMap<Integer, Integer> item = new HashMap<>();
-//					}
-//				}
-//			}
-//		}
-//		else {
-//			
-//		}
-//		
-//		
+		if (sessionUser == null ) {
+			// Set up cart
+			if (sessionCart == null) {
+				if (cookies != null) {
+					for (Cookie cookie : cookies) {
+						if (cookie.getName().equals("cartCookie")) {
+							Cart cart = new Cart();
+							List<CartDetail> listOfItems = new ArrayList<>();
+
+							// Cookies will have format: Product_id_Ammount:Product_id_Ammount:
+							String cartCookie = cookie.getValue();
+							String[] itemCookies = cartCookie.split(":");
+							// Get list of cart Detail
+							for (String itemCookie : itemCookies) {
+								int productID = Integer.parseInt(itemCookie.split("_")[0]);
+								int amount = Integer.parseInt(itemCookie.split("_")[1]);
+								// Get item
+								CartDetail cartDetail = new CartDetail();
+								cartDetail.setAmount(amount);
+								cartDetail.setCart(cart);
+								cartDetail.setProduct(productService.getProductByID(productID));
+								listOfItems.add(cartDetail);
+							}
+							
+
+							cart.setCartDetails(listOfItems);
+							session.setAttribute("cart", cart);
+						}
+					
+					}
+				}
+			}
+			// Set up wishlist
+			if(sessionWishlist==null) {
+				if(cookies != null) {
+				
+					for (Cookie cookie : cookies) {
+						if(cookie.getName().equals("wishlistCookie")) {
+							Wishlist wishlist = new  Wishlist();
+							//Wishlist cookie will have format 
+							
+						}
+					}
+				}
+			}
+		} 
+		else {
+
+		}
 
 	}
 
