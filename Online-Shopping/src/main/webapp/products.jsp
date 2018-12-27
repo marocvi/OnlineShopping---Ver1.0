@@ -84,9 +84,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	cursor: default;
 	opacity: 0.6;
 }
-input.comment {
-	width: 500px;
-}
+
 
 </style>
 

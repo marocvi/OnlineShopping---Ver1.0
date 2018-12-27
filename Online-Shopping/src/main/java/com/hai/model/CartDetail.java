@@ -19,6 +19,8 @@ public class CartDetail {
 	private int id;
 	private double money;
 	private int amount;
+	private String color;
+	private String size;
 	
 	//Map to product
 	@ManyToOne
@@ -29,6 +31,8 @@ public class CartDetail {
 	@ManyToOne
 	@JoinColumn(name = "Cart_ID", nullable = false)
 	private Cart cart;
+	
+	
 
 	public int getId() {
 		return id;
@@ -65,6 +69,22 @@ public class CartDetail {
 
 	public Cart getCart() {
 		return cart;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
 	}
 
 	public void setCart(Cart cart) {

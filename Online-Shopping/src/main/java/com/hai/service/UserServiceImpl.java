@@ -128,7 +128,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public Users getUserByEmail(String email) {
-
+		
 		return userDAO.findByEmail(email);
 	}
 

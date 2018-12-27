@@ -77,12 +77,19 @@ public class LogoutController extends HttpServlet {
 
 		// Delete Cart and wishlist TODO
 		LOGGER.info("Delete the cart, wishlist sucessflly");
-		// Delete user from session.
-		request.getSession().removeAttribute("user");
-		LOGGER.info("Delete the user from session sucessflly");
+		// Delete session
+		if(request.getSession()!=null) {
+			request.getSession().invalidate();
+		}
+		//Delete cartCookie
+		Cookie cookie = new Cookie("cartCookie", "");
+		cookie.setMaxAge(0);
+		response.addCookie(cookie);
+		
+		
 
 		// Redirect to home
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		response.sendRedirect("home");
 
 	}
 

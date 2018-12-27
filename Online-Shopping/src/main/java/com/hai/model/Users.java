@@ -7,10 +7,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -54,8 +56,8 @@ public class Users {
 	private List<Wishlist> wishlists;
 
 	// Map to Cart
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Cart> carts;
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	private Cart cart;
 
 	// Map to Order
 	@OneToMany(mappedBy = "orderUser", cascade = CascadeType.ALL)
@@ -181,12 +183,18 @@ public class Users {
 		this.wishlists = wishlists;
 	}
 
-	public List<Cart> getCarts() {
-		return carts;
+	
+
+	public Cart getCart() {
+		return cart;
 	}
 
-	public void setCarts(List<Cart> carts) {
-		this.carts = carts;
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getFirstName() {

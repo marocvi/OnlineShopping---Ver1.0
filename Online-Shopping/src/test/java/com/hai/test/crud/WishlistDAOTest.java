@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.hai.dao.ProductDAOImpl;
+import com.hai.dao.UserDAOImpl;
 import com.hai.dao.WishlistDAOImpl;
 import com.hai.model.Product;
 import com.hai.model.Users;
@@ -69,7 +69,7 @@ public class WishlistDAOTest {
 
 	@Test // ok
 	public void testFindByProperty() {
-		assertEquals(1, wishlistDAO.findByProperty("product", new ProductDAOImpl(sessionFactory).findById(21)).size());
+		assertEquals(1, wishlistDAO.findByProperty("user",new UserDAOImpl(sessionFactory).findById(1)).size());
 	}
 
 }

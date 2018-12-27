@@ -8,7 +8,7 @@ import org.hibernate.cfg.Configuration;
 public class Test {
 
 	public static void main(String[] args) {
-		Configuration config  = new Configuration().configure().addAnnotatedClass(Car.class).addAnnotatedClass(Employee.class);
+		Configuration config  = new Configuration().configure().addAnnotatedClass(Stock.class).addAnnotatedClass(StockDetail.class);
 		SessionFactory sf = config.buildSessionFactory();
 		//Creat Object 
 		Session ss = sf.openSession();

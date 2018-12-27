@@ -13,7 +13,9 @@
 				<div class="header-in">
 
 					<ul class="icon1 sub-icon1">
-						<li><a href="wishlist.html">WISH LIST (0)</a></li>
+						<li><a href='<c:url value="/wishlist?action=view&page=1"></c:url>'>WISH LIST (<span id="numberOfItemsInWishlist">
+						<c:out value="${fn:length(listOfWishlistItems)}"></c:out>
+						</span>)</a></li>
 						<c:choose>
 							<%--If user already login--%>
 							<c:when test="${sessionScope.user!=null}">
@@ -32,17 +34,17 @@
 						</c:choose>
 
 
-						<li><a href="#"> SHOPPING CART</a></li>
-						<li><a href="checkout.html">CHECKOUT</a></li>
+						<li><a href='<c:url value="/cart?action=viewCart"></c:url>'>
+								SHOPPING CART</a></li>
 						<li><div class="cart">
-								<a href="#" class="cart-in" onmouseover="scrollCart()"> </a> <span id="numberOfItems">${fn:length(cart.cartDetails)}</span>
+								<a href="#" class="cart-in" onmouseover="scrollCart()"> </a> <span
+									id="numberOfItems">${fn:length(sessionScope.cart.cartDetails)}</span>
 							</div>
 							<ul class="sub-icon1 list">
 								<h3>Recently added items</h3>
 								<div id="shopping_cart">
-									<c:forEach var="item" items="${cart.cartDetails}">
-
-										<div class="cart_box" >
+									<c:forEach var="item" items="${sessionScope.cart.cartDetails}">
+										<div class="cart_box" id="item_${item.product.id}">
 											<div class="message">
 												<div class="list_img">
 													<img src="images/${item.product.profileImage}.jpg"
@@ -50,26 +52,30 @@
 												</div>
 												<div class="list_desc">
 													<h4>
-														<a href="#">${item.product.name}</a>
+														<a
+															href='<c:url value="/product?action=detail&product_id=${item.product.id}"></c:url>'>${item.product.name}</a>
 													</h4>
-													${item.amount} x<span class="actual"> ${item.money}</span>
+													<p style="display: inline;" id="itemAmount_${item.product.id}">${item.amount}</p> x<span class="actual" >
+														${item.money}</span>
 												</div>
 												<div class="clearfix"></div>
 											</div>
 										</div>
-
 									</c:forEach>
-
-
 								</div>
 								<div class="total">
 									<div class="total_left">CartSubtotal :</div>
-									<div class="total_right">$${cart.moneyTotal}</div>
+									<div class="total_right" id="priceTotal">$
+									<c:if test="${cart==null}">
+										0.0
+									</c:if>
+									${cart.moneyTotal}</div>
 									<div class="clearfix"></div>
 								</div>
 								<div class="login_buttons">
 									<div class="check_button">
-										<a href="checkout.html">Check out</a>
+										<a href='<c:url value="/cart?action=viewCart"></c:url>'>Check
+											out</a>
 									</div>
 									<div class="clearfix"></div>
 								</div>

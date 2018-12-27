@@ -1,17 +1,17 @@
 package com.hai.model;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -22,7 +22,7 @@ public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="Cart_ID")
-	private int id;
+	private int id  ;
 	@Column(name = "Money_Total")
 	private double moneyTotal;
 	@Column(name = "Amount_Total")
@@ -31,12 +31,12 @@ public class Cart {
 
 	
 	//Map to  user
-	@ManyToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "User_ID", unique = true)
 	private Users user;
 	
 	//Map to Cart_Detail
-	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL,fetch=FetchType.EAGER,orphanRemoval=true)
 	private List<CartDetail > cartDetails ;
 
 

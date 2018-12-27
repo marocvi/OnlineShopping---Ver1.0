@@ -1,7 +1,6 @@
 package com.hai.config;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletRequestEvent;
@@ -13,18 +12,22 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 
+import com.hai.iservice.ICartService;
 import com.hai.iservice.ICategoryService;
 import com.hai.iservice.IProductService;
 import com.hai.iservice.IUserService;
+import com.hai.iservice.IWishListService;
 import com.hai.model.Cart;
 import com.hai.model.CartDetail;
 import com.hai.model.Category;
 import com.hai.model.Users;
 import com.hai.model.Users.LoginStatus;
 import com.hai.model.Wishlist;
+import com.hai.service.CartServiceImpl;
 import com.hai.service.CategoryServiceImpl;
 import com.hai.service.ProductServiceImpl;
 import com.hai.service.UserServiceImpl;
+import com.hai.service.WishlistServiceImpl;
 
 /**
  * Every request come to server it wil check whether user login by looking
@@ -41,11 +44,12 @@ public class MyRequestListener implements ServletRequestListener {
 	private IUserService userService;
 	private ICategoryService categoryService;
 	private IProductService productService;
+	private ICartService cartService;
+	private IWishListService wishlistService;
 	private Logger LOGGER;
 
 	public MyRequestListener() {
 
-		;
 		LOGGER = Logger.getLogger(MyRequestListener.class.getName());
 	}
 
@@ -53,6 +57,7 @@ public class MyRequestListener implements ServletRequestListener {
 	public void requestDestroyed(ServletRequestEvent sre) {
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void requestInitialized(ServletRequestEvent sre) {
 
@@ -61,14 +66,17 @@ public class MyRequestListener implements ServletRequestListener {
 		userService = new UserServiceImpl(sessionFactory);
 		categoryService = new CategoryServiceImpl(sessionFactory);
 		productService = new ProductServiceImpl(sessionFactory);
+		cartService = new CartServiceImpl(sessionFactory);
+		wishlistService = new WishlistServiceImpl(sessionFactory);
 		
+
 		// Get request from ServletRequestEvent
 		HttpServletRequest request = (HttpServletRequest) sre.getServletRequest();
 
 		HttpSession session = request.getSession();
 		Users sessionUser = (Users) session.getAttribute("user");
 		Cart sessionCart = (Cart) session.getAttribute("cart");
-		Wishlist sessionWishlist = (Wishlist) session.getAttribute("wishlist");
+		List<Wishlist> listOfWishlistItems = (List<Wishlist>) session.getAttribute("listOfWishlistItems");
 		Cookie[] cookies = request.getCookies();
 
 		/*
@@ -125,59 +133,114 @@ public class MyRequestListener implements ServletRequestListener {
 		/*
 		 * I'm going to divide into two case. 1. User not login yet and 2. User loingin
 		 * already
-		 * 
+		 * When session has cart and wishlist already , ignore the codes below.
 		 */
-
-		if (sessionUser == null ) {
-			// Set up cart
-			if (sessionCart == null) {
-				if (cookies != null) {
-					for (Cookie cookie : cookies) {
-						if (cookie.getName().equals("cartCookie")) {
-							Cart cart = new Cart();
-							List<CartDetail> listOfItems = new ArrayList<>();
-
-							// Cookies will have format: Product_id_Ammount:Product_id_Ammount:
-							String cartCookie = cookie.getValue();
-							String[] itemCookies = cartCookie.split(":");
-							// Get list of cart Detail
-							for (String itemCookie : itemCookies) {
-								int productID = Integer.parseInt(itemCookie.split("_")[0]);
-								int amount = Integer.parseInt(itemCookie.split("_")[1]);
-								// Get item
-								CartDetail cartDetail = new CartDetail();
-								cartDetail.setAmount(amount);
-								cartDetail.setCart(cart);
-								cartDetail.setProduct(productService.getProductByID(productID));
-								listOfItems.add(cartDetail);
-							}
-							
-
-							cart.setCartDetails(listOfItems);
-							session.setAttribute("cart", cart);
-						}
-					
-					}
-				}
-			}
-			// Set up wishlist
-			if(sessionWishlist==null) {
-				if(cookies != null) {
-				
-					for (Cookie cookie : cookies) {
-						if(cookie.getName().equals("wishlistCookie")) {
-							Wishlist wishlist = new  Wishlist();
-							//Wishlist cookie will have format 
-							
-						}
-					}
-				}
-			}
-		} 
-		else {
-
+		
+		if (session.getAttribute("user") == null && sessionCart == null && cookies != null) {
+			// Load Cart from cookie
+			loadCartFromCookie(session, cookies);
 		}
-
+		else if(session.getAttribute("user")!= null && sessionCart == null && cookies != null) {
+			//Load cart from DB;
+			loadCartFromDatabase(session);
+			
+			
+		}
+		// Set up wishlist
+		if(session.getAttribute("user")==null& listOfWishlistItems==null&& cookies!=null) {
+			//Load wishlist from cookie
+			loadWishlistItemsFromCookie(session,cookies);
+		}
+		else if(session.getAttribute("user")!= null && listOfWishlistItems == null && cookies != null) {
+			//Load Cookie from DB
+			loadWishlistFromDatabase(session);
+			
+			
+		}
 	}
 
+	
+	
+	
+	
+	private void loadWishlistFromDatabase(HttpSession session) {
+		List<Wishlist> listOfWishlistItems = wishlistService
+				.getWishlistItemsByUser((Users) session.getAttribute("user"));
+		session.setAttribute("listOfWishlistItems", listOfWishlistItems);
+	}
+
+	private void loadCartFromDatabase(HttpSession session) {
+			Users sessionUser = (Users)session.getAttribute("user");
+			Cart cart = sessionUser.getCart();
+			session.setAttribute("cart", cart);
+			LOGGER.info("Add Cart to session from listener");
+		
+	}
+
+	private void loadCartFromCookie(HttpSession session, Cookie[] cookies) {
+		Cart sessionCart;
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equals("cartCookie")) {
+				sessionCart = new Cart();
+				List<CartDetail> listOfItems = new ArrayList<>();
+
+				// Cookies will have format: Productid_Ammount:Productid_Ammount:
+				String cartCookie = cookie.getValue();
+				String[] itemCookies = cartCookie.split(":");
+				// Get list of cart Detail
+				for (String itemCookie : itemCookies) {
+					int productID = Integer.parseInt(itemCookie.split("_")[0]);
+					int amount = Integer.parseInt(itemCookie.split("_")[1]);
+					String color = itemCookie.split("_")[2];
+					String size = itemCookie.split("_")[3];
+					// Get item
+					CartDetail cartDetail = new CartDetail();
+					cartDetail.setAmount(amount);
+					cartDetail.setCart(sessionCart);
+					cartDetail.setProduct(productService.getProductByID(productID));
+					cartDetail.setMoney(productService.getValidPrice(cartDetail.getProduct()));
+					cartDetail.setColor(color);
+					cartDetail.setSize(size);
+					listOfItems.add(cartDetail);
+				}
+				sessionCart.setCartDetails(listOfItems);
+				sessionCart.setMoneyTotal(cartService.getMoneyTotal(listOfItems));
+				session.setAttribute("cart", sessionCart);
+				LOGGER.info("Add Cart to session from listener");
+			}
+
+		}
+	}
+	private void loadWishlistItemsFromCookie(HttpSession session, Cookie[] cookies) {
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equals("wishlistCookie")) {
+				
+				List<Wishlist> listOfWishlistItems = new ArrayList<>();
+
+				// Cookies will have format: Productid :Productid :
+				String wishlistCookieValue = cookie.getValue();
+				String[] wishlistCookies = wishlistCookieValue.split(":");
+				// Get list of cart Detail
+				for (String productID : wishlistCookies) {
+					Wishlist wishlist = new Wishlist();
+					wishlist.setProduct(productService.getProductByID(Integer.parseInt(productID)));
+					listOfWishlistItems.add(wishlist);
+				}
+				session.setAttribute("listOfWishlistItems",listOfWishlistItems);
+				LOGGER.info("Add WishList to session from listener");
+			}
+
+		}
+	}
+	
+
 }
+
+
+
+
+
+
+
+
+

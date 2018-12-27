@@ -25,14 +25,14 @@ public class CartDAOTest {
 	}
 	
 	
-//	@Test //OK
+	@Test //OK
 	public void testSave() {
 		Cart cart = new Cart();
 		cart.setAmountTotal(9);
 		cart.setMoneyTotal(56000);
 		cartDAO.save(cart);
 	}
-	@Test //OK
+//	@Test //OK
 	public void testUpdate() {
 		Cart cart = cartDAO.findById(3);
 		cart.setAmountTotal(2);

@@ -29,7 +29,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="application/x-javascript">
 	
 	
+	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
 
 
 </script>
@@ -166,17 +172,19 @@ button.submit:focus {
 	border-top: 1px #FB5E33 solid;
 	margin-top: 20px;
 }
-img.fashion{
+
+img.fashion {
 	width: 98px;
 	height: 98px;
 }
-a.cart-to{
+
+a.cart-to {
 	margin-left: 10px;
 }
-#addcart,#addwishlist:hover{
+
+#addcart, #addToWishlist, .removeFromWishlist, .addToWishlist:hover {
 	cursor: pointer;
 }
-
 </style>
 </head>
 
@@ -219,7 +227,7 @@ a.cart-to{
 				}
 				http.open("POST", "${myUrl}", true);
 				http.setRequestHeader("Content-type",
-						"application/x-www-form-urlencoded");
+						"application/x-www-form-urlencoded; charset=utf-8");
 				http.send(data);
 			}
 
@@ -229,40 +237,129 @@ a.cart-to{
 			var contentNode = document.createElement("li");
 			var userName = document
 					.createTextNode("${sessionScope.user.firstName}");
-			var content = document
-					.createTextNode(document.getElementById("content").value);
+			var content = document.createTextNode(response.responseText);
 			contentNode.appendChild(content);
 			userNameNode.appendChild(userName);
 			document.getElementById("commentList").prepend(contentNode);
 			document.getElementById("commentList").prepend(userNameNode);
 			//delete texare
-			document.getElementById("content").value="";
+			document.getElementById("content").value = "";
 		}
-		
 	</script>
 	<!--Add to cart-->
 	<c:url var="cartUrl" value="/product">
 		<c:param name="action" value="cart" />
 	</c:url>
 	<script type="text/javascript">
-		function addToCart(productId){
+		function addToCart(productId) {
 			//check if user set ammount want to buy else set amount to 1.
 			var amount = document.getElementById("quantity").value;
-			var data = "amount="+amount+"&product_id="+productId;
+			if (amount < 0) {
+				alert("Please enter amount > 0");
+			} else {
+
+				var color = document.getElementById("color").value;
+				var size = document.getElementById("size").value;
+				var data = "size=" + size + "&color=" + color + "&amount="
+						+ amount + "&product_id=" + productId;
+				var http = new XMLHttpRequest();
+
+				http.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+					}
+				}
+				http.open("POST", "${cartUrl}", true);
+				http.setRequestHeader("Content-type",
+						"application/x-www-form-urlencoded");
+				http.send(data);
+			}
+
+		}
+	</script>
+	<!-- Add and Remove product to wishlist -->
+	<c:url var="addToWishlistURL" value="/product?action=wishlist"></c:url>
+	<c:url var="removeFromWishlistURL" value="/wishlist?action=remove"></c:url>
+	<script type="text/javascript">
+		function addToWishlist(productID) {
 			var http = new XMLHttpRequest();
-			http.onreadystatechange = function(){
-				if(this.readyState == 4 && this.status ==200){
-					
+			http.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					addToWishlistChange(productID);
 				}
 			}
-			http.open("POST","${cartUrl}", true);
+			http.open("POST", "${addToWishlistURL}&product_id=" + productID,
+					true);
 			http.setRequestHeader("Content-type",
-			"application/x-www-form-urlencoded");
-			http.send(data);
-			
+					"application/x-www-form-urlencoded; charset=utf-8");
+			http.send();
 		}
-		
+		function addToWishlistChange(productID) {
+			//Add "remove wishlist" button
+			var removeNode = document.createElement("a");
+			var attrClass = document.createAttribute("class");
+			attrClass.value = "hvr-shutter-in-vertical cart-to removeFromWishlist";
+			var attrOnclick = document.createAttribute("onclick");
+			attrOnclick.value = "removeFromWishlist("+productID+")";
+			var nameOfButton = document.createTextNode("Remove From Wishlist");
+
+			removeNode.setAttributeNode(attrClass);
+			removeNode.setAttributeNode(attrOnclick);
+			removeNode.append(nameOfButton);
+			var functionButton = document.getElementById("functionButton");
+			functionButton.append(removeNode);
+			//disapear the " add to wishlist" button
+			var buttonAdds = document.getElementsByClassName("addToWishlist");
+			for(var i=0;i<buttonAdds.length;i++){
+				buttonAdds[i].style.display="none";
+			}
+
+			//Change number of items in wishlist
+			var numberOfWishlistItems = parseInt(document
+					.getElementById("numberOfItemsInWishlist").innerHTML) + 1;
+			document.getElementById("numberOfItemsInWishlist").innerHTML = " "
+					+ numberOfWishlistItems + " ";
+
+		}
+		function removeFromWishlist(productID) {
+			var http = new XMLHttpRequest();
+			http.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					removeFromWishlistChange(productID);
+				}
+			}
+			http.open("POST", "${removeFromWishlistURL}&product_id=" + productID,
+					true);
+			http.setRequestHeader("Content-type",
+					"application/x-www-form-urlencoded; charset=utf-8");
+			http.send();
+		}
+		function removeFromWishlistChange(productID) {
+			//Add "remove wishlist" button
+			var addNode = document.createElement("a");
+			var attrClass = document.createAttribute("class");
+			attrClass.value = "hvr-shutter-in-vertical cart-to addToWishlist";
+			
+			var attrOnclick = document.createAttribute("onclick");
+			attrOnclick.value = "addToWishlist("+productID+")";
+			var nameOfButton = document.createTextNode("Add To Wishlist");
+
+			addNode.setAttributeNode(attrClass);
+			addNode.setAttributeNode(attrOnclick);
+			addNode.append(nameOfButton);
+			var functionButton = document.getElementById("functionButton");
+			functionButton.append(addNode);
+			//disapear the " add to wishlist" button
+			var buttonRemoves = document.getElementsByClassName("removeFromWishlist");
+			for(var i=0;i<buttonRemoves.length;i++){
+				buttonRemoves[i].style.display="none";
+			}
+
+			//Change number of items in wishlist
+			var numberOfWishlistItems = parseInt(document
+					.getElementById("numberOfItemsInWishlist").innerHTML) - 1;
+			document.getElementById("numberOfItemsInWishlist").innerHTML = " "
+					+ numberOfWishlistItems + " ";
+		}
 	</script>
-	<!-- Custome scroll of shopping cart when it has more than 3 items -->
 </body>
 </html>

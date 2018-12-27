@@ -15,43 +15,63 @@
 				</ul>
 
 			</div>
-				<div class="col-md-7 single-top-in">
-					<div class="single-para">
-						<h4>${product.name}</h4>
-						<div class="para-grid">
-							<span class="add-to" id="price">$${price}</span> 
-							<c:url value="/product" var="detailUrl">
-								<c:param name="action" value="detail"></c:param>
-								<c:param name="product_id" value="${param.product_id}"></c:param>
-							</c:url>
-							<a href="${detailUrl }" onclick="addToCart(${param.product_id})" class="hvr-shutter-in-vertical cart-to" id="addcart">Add to Cart</a>
-							<a href="#" class="hvr-shutter-in-vertical cart-to" id ="addwishlist" >Whislist</a>
-							<div class="clearfix"></div>
-						</div>
-						<h5 id="amount">${product.stock}</h5>
-						<div class="available">
-							<h6>Available Options :</h6>
-							<ul>
-								<li>Color: <select  id="color">
-										<c:forEach var="color" items="${listOfColors}">
-											<option>${color}</option>
-										</c:forEach>
-								</select>
-								</li>
-								<li>Size:<select id="size">
-										<c:forEach var="size" items="${listOfSizes}">
-											<option>${size}</option>
-										</c:forEach>
-								</select></li>
-								<li>Quantity: <input type="number" id="quantity"
-									style="width: 50px; height: 24px;">
-								</li>
-							</ul>
-						</div>
-						<p>${product.description}</p>
-
+			<div class="col-md-7 single-top-in">
+				<div class="single-para">
+					<h4>${product.name}</h4>
+					<div class="para-grid">
+						<span class="add-to" id="price">$${price}</span>
+						<p id="functionButton">
+						<c:url value="/product" var="detailUrl">
+							<c:param name="action" value="detail"></c:param>
+							<c:param name="product_id" value="${param.product_id}"></c:param>
+						</c:url>
+						<a href="${detailUrl}" onclick="addToCart(${param.product_id})"
+							class="hvr-shutter-in-vertical cart-to" id="addcart">Add to
+							Cart</a>
+						<!--  If product in wish list we should show remove -->
+						<c:set var="checkWishlist" value="false"></c:set>
+						<c:forEach var="wishlistItem" items="${listOfWishlistItems}">
+							<c:choose>
+								<c:when test="${param.product_id==wishlistItem.product.id}">
+									<c:set var="checkWishlist" value="true"></c:set>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${checkWishlist}">
+							<a class="hvr-shutter-in-vertical cart-to removeFromWishlist" 
+								onclick="removeFromWishlist(${product.id})">Remove From Wishlist</a>
+						</c:if>
+						<c:if test="${!checkWishlist}">
+							<a class="hvr-shutter-in-vertical cart-to addToWishlist" 
+								onclick="addToWishlist(${product.id})">Add To Wishlist</a>
+						</c:if>
+						</p>
+						<div class="clearfix"></div>
 					</div>
+					<h5 id="amount">${product.stock}</h5>
+					<div class="available">
+						<h6>Available Options :</h6>
+						<ul>
+							<li>Color: <select id="color">
+									<c:forEach var="color" items="${listOfColors}">
+										<option>${color}</option>
+									</c:forEach>
+							</select>
+							</li>
+							<li>Size:<select id="size">
+									<c:forEach var="size" items="${listOfSizes}">
+										<option>${size}</option>
+									</c:forEach>
+							</select></li>
+							<li>Quantity: <input type="number" id="quantity"
+								style="width: 50px; height: 24px;">
+							</li>
+						</ul>
+					</div>
+					<p>${product.description}</p>
+
 				</div>
+			</div>
 			<div class="clearfix"></div>
 			<div class="content-top-in">
 				<div class="comment">
@@ -75,7 +95,9 @@
 
 				<ul>
 					<c:forEach var="subCategory" items="${listOfSubCategories}">
-						<li><a href='<c:url value="/product?action=view&subcategoryid=${subCategory.id}&page=1"></c:url>'><i> </i>${subCategory.name}</a></li>
+						<li><a
+							href='<c:url value="/product?action=view&subcategoryid=${subCategory.id}&page=1"></c:url>'><i>
+							</i>${subCategory.name}</a></li>
 					</c:forEach>
 
 
@@ -89,9 +111,10 @@
 						<img class="img-responsive fashion"
 							src="images/${product.profileImage}.jpg" alt="">
 						<div class="grid-product">
-							<a href='<c:url value="/product?action=detail&product_id=${product.id}"></c:url>' class="elit">${product.name}</a> <span
-								class="price price-in"> $ <c:forEach var="price"
-									items="${product.prices}">
+							<a
+								href='<c:url value="/product?action=detail&product_id=${product.id}"></c:url>'
+								class="elit">${product.name}</a> <span class="price price-in">
+								$ <c:forEach var="price" items="${product.prices}">
 									<c:choose>
 										<c:when
 											test="${requestScope.today >= price.startDate.time && requestScope.today<= price.endDate.time}">

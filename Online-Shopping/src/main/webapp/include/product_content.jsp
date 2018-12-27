@@ -21,7 +21,7 @@
 								<a href="product_detail.jsp">${product.name}</a>
 							</h5>
 							<div class="white">
-								<a href="single.html"
+								<a href='<c:url value ="/product?action=detail&product_id=${product.id}"></c:url>'
 									class="hvr-shutter-in-vertical hvr-shutter-in-vertical2">ADD
 									TO CART</a>
 								<p class="dollar">
