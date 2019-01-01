@@ -6,8 +6,11 @@
 			<div>
 				<p>Total:</p>
 				<ul>
-					<li><span id="moneyTotal">$
-					 <c:if test="${cart==null}">0.0</c:if>${cart.moneyTotal} </span></li>
+					<li><span id="moneyTotal">${currency} <c:if
+								test="${cart==null}">0.0</c:if><fmt:formatNumber
+										type="number" maxFractionDigits="2"
+										value="${cart.moneyTotal*rate}" />
+					</span></li>
 				</ul>
 			</div>
 		</div>
@@ -27,7 +30,7 @@
 						<div class="cart-detail clearfix">
 							<a
 								href='<c:url value="/product?action=detail&product_id=${cartDetail.product.id}"></c:url>'><img
-								src="images/${cartDetail.product.profileImage}.jpg"></a>
+								src="images/product/${cartDetail.product.profileImage}.jpg"></a>
 							<ul id="properties">
 								<li>Name: <span
 									style="font-weight: bold; margin-left: 5px; margin-bottom: 5px;">${cartDetail.product.name}</span></li>
@@ -38,14 +41,18 @@
 							</ul>
 							<p id="price">
 								Unit Price: <span
-									style="font-weight: bold; margin-left: 5px; margin-bottom: 5px;">$${cartDetail.money}</span>
+									style="font-weight: bold; margin-left: 5px; margin-bottom: 5px;">${currency}<fmt:formatNumber
+										type="number" maxFractionDigits="2"
+										value=" ${cartDetail.money*rate}" /></span>
 							</p>
 							<span id="close" onclick="deleteCart(${cartDetail.product.id})">x</span>
 							<p id="amount">
-								<button id="amount-minus" onclick="minus(${cartDetail.product.id})">-</button>
-								<span  id="cartDetailAmount_${cartDetail.product.id}">${cartDetail.amount}</span>
-								
-								<button class="amount-plus" onclick="add(${cartDetail.product.id})">+</button>
+								<button id="amount-minus"
+									onclick="minus(${cartDetail.product.id})">-</button>
+								<span id="cartDetailAmount_${cartDetail.product.id}">${cartDetail.amount}</span>
+
+								<button class="amount-plus"
+									onclick="add(${cartDetail.product.id})">+</button>
 							</p>
 						</div>
 					</div>

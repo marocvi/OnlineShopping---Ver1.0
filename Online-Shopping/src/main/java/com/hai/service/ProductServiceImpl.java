@@ -1,7 +1,15 @@
 package com.hai.service;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -97,8 +105,7 @@ public class ProductServiceImpl implements IProductService {
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			session.close();
 			LOGGER.info("Close session");
 		}
@@ -107,14 +114,128 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public double getValidPrice(Product product) {
+	public  double getValidPrice(Product product) {
 		List<Price> prices = product.getPrices();
 		for (Price price : prices) {
-			if(price.getStartDate().getTime()<=new Date().getTime()&&price.getEndDate().getTime()>=new Date().getTime()) {
-				return price.getUnitPrice();
+			if (price.getStartDate().getTime() <= new Date().getTime()
+					&& price.getEndDate().getTime() >= new Date().getTime()) {
+				NumberFormat formatter = new DecimalFormat(".00");
+				return Double.parseDouble( formatter.format(price.getUnitPrice()));
 			}
 		}
 		return 0.0;
 	}
+
+	@Override
+	public void update(Product product) {
+		productDAO.update(product);
+	}
+
+	@Override
+	public List<Product> getListOfGreatestProductsByBrand(String brand) {
+		Session session = sessionFactory.openSession();
+		List<Product> products = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
+			Root<Product> root = criteriaQuery.from(Product.class);
+			ParameterExpression<String> paramter = builder.parameter(String.class);
+			criteriaQuery.select(root);
+			criteriaQuery.where(builder.equal(root.get("brand"), paramter));
+			criteriaQuery.orderBy(builder.desc(root.get("view")));
+			Query<Product> query = session.createQuery(criteriaQuery);
+			query.setParameter(paramter, brand);
+			query.setFirstResult(0);
+			query.setMaxResults(4);
+			products = query.getResultList();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOGGER.error("Can't get list of greatest products by brand");
+		} finally {
+			session.close();
+			LOGGER.info("Session close");
+
+		}
+		return products;
+	}
+
+	@Override
+	public List<Product> getListOfNewestProductsByBrand(String brand) {
+		Session session = sessionFactory.openSession();
+		List<Product> products = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
+			Root<Product> root = criteriaQuery.from(Product.class);
+			ParameterExpression<String> paramter = builder.parameter(String.class);
+			criteriaQuery.select(root);
+			criteriaQuery.where(builder.equal(root.get("brand"), paramter));
+			criteriaQuery.orderBy(builder.asc(root.get("importDate")));
+			Query<Product> query = session.createQuery(criteriaQuery);
+			query.setParameter(paramter, brand);
+			query.setFirstResult(0);
+			query.setMaxResults(4);
+			products = query.getResultList();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOGGER.error("Can't get list of greatest products by brand");
+		} finally {
+			session.close();
+			LOGGER.info("Session close");
+
+		}
+		return products;
+	
+	}
+
+	@Override
+	public List<String> getListOfProductBrand() {
+		String sql = "Select distinct brand from Product";
+		List<String > brands = new ArrayList<>();
+		Session session = sessionFactory.openSession();
+		try {
+			session.beginTransaction();
+			Query<String> query = session.createNativeQuery(sql);
+			brands = query.getResultList();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			LOGGER.error("Can't get brands");
+		}
+		finally {
+			session.close();
+		}
+		return brands;
+	}
+
+	@Override
+	public List<Product> getListOfProductsByKeyName(String keyName) {
+		String hql="from Product where name like '%"+keyName+"%'";
+		Session session = sessionFactory.openSession();
+		List<Product> products = new ArrayList<>();
+		
+		try {
+			session.beginTransaction();
+			//Code go here
+			Query<Product> query = session.createQuery(hql);
+			products = query.getResultList();
+			
+			
+		}
+		catch(Exception e) {
+			LOGGER.error("Can't get List of Product from DB");
+			e.printStackTrace();
+		}
+		finally {
+			session.close();
+			LOGGER.info("Close session");
+		}
+		return products;
+	}
+	
 
 }

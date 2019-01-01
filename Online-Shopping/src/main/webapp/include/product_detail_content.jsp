@@ -8,9 +8,9 @@
 				<ul id="etalage">
 					<c:forEach var="image" items="${listOfImages}">
 						<li><img class="etalage_thumb_image img-responsive"
-							src="images/${image}.jpg" alt=""> <img
+							src="images/product/${image}.jpg" alt=""> <img
 							class="etalage_source_image img-responsive"
-							src="images/${image}.jpg" alt=""></li>
+							src="images/product/${image}.jpg" alt=""></li>
 					</c:forEach>
 				</ul>
 
@@ -19,36 +19,46 @@
 				<div class="single-para">
 					<h4>${product.name}</h4>
 					<div class="para-grid">
-						<span class="add-to" id="price">$${price}</span>
+						<span class="add-to" id="price">${currency}<fmt:formatNumber
+								type="number" maxFractionDigits="2" value="${price*rate}" />
+						</span>
 						<p id="functionButton">
-						<c:url value="/product" var="detailUrl">
-							<c:param name="action" value="detail"></c:param>
-							<c:param name="product_id" value="${param.product_id}"></c:param>
-						</c:url>
-						<a href="${detailUrl}" onclick="addToCart(${param.product_id})"
-							class="hvr-shutter-in-vertical cart-to" id="addcart">Add to
-							Cart</a>
-						<!--  If product in wish list we should show remove -->
-						<c:set var="checkWishlist" value="false"></c:set>
-						<c:forEach var="wishlistItem" items="${listOfWishlistItems}">
-							<c:choose>
-								<c:when test="${param.product_id==wishlistItem.product.id}">
-									<c:set var="checkWishlist" value="true"></c:set>
-								</c:when>
-							</c:choose>
-						</c:forEach>
-						<c:if test="${checkWishlist}">
-							<a class="hvr-shutter-in-vertical cart-to removeFromWishlist" 
-								onclick="removeFromWishlist(${product.id})">Remove From Wishlist</a>
-						</c:if>
-						<c:if test="${!checkWishlist}">
-							<a class="hvr-shutter-in-vertical cart-to addToWishlist" 
-								onclick="addToWishlist(${product.id})">Add To Wishlist</a>
-						</c:if>
+							<c:url value="/product" var="detailUrl">
+								<c:param name="action" value="detail"></c:param>
+								<c:param name="product_id" value="${param.product_id}"></c:param>
+							</c:url>
+							<a href="${detailUrl}" onclick="addToCart(${param.product_id})"
+								class="hvr-shutter-in-vertical cart-to" id="addcart">Add to
+								Cart</a>
+							<!--  If product in wish list we should show remove -->
+							<c:set var="checkWishlist" value="false"></c:set>
+							<c:forEach var="wishlistItem" items="${listOfWishlistItems}">
+								<c:choose>
+									<c:when test="${param.product_id==wishlistItem.product.id}">
+										<c:set var="checkWishlist" value="true"></c:set>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+							<c:if test="${checkWishlist}">
+								<a class="hvr-shutter-in-vertical cart-to removeFromWishlist"
+									onclick="removeFromWishlist(${product.id})">Remove From
+									Wishlist</a>
+							</c:if>
+							<c:if test="${!checkWishlist}">
+								<a class="hvr-shutter-in-vertical cart-to addToWishlist"
+									onclick="addToWishlist(${product.id})">Add To Wishlist</a>
+							</c:if>
 						</p>
 						<div class="clearfix"></div>
 					</div>
-					<h5 id="amount">${product.stock}</h5>
+					<h5 id="amount">
+						<c:if test="${product.stock==0}">
+						Out Of Stock
+						</c:if>
+						<c:if test="${product.stock>0}">
+						${product.stock}
+						</c:if>
+					</h5>
 					<div class="available">
 						<h6>Available Options :</h6>
 						<ul>
@@ -109,16 +119,17 @@
 
 					<div class="product">
 						<img class="img-responsive fashion"
-							src="images/${product.profileImage}.jpg" alt="">
+							src="images/product/${product.profileImage}.jpg" alt="">
 						<div class="grid-product">
 							<a
 								href='<c:url value="/product?action=detail&product_id=${product.id}"></c:url>'
 								class="elit">${product.name}</a> <span class="price price-in">
-								$ <c:forEach var="price" items="${product.prices}">
+								${currency} <c:forEach var="price" items="${product.prices}">
 									<c:choose>
 										<c:when
 											test="${requestScope.today >= price.startDate.time && requestScope.today<= price.endDate.time}">
-											${price.unitPrice}"
+											<fmt:formatNumber type="number" maxFractionDigits="2"
+												value="${price.unitPrice*rate}" />
 										</c:when>
 										<%-- There is no price comfort to condition --%>
 										<c:otherwise>

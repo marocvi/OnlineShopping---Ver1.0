@@ -65,6 +65,9 @@ public class ViewDetailController extends HttpServlet {
 		if (request.getParameter("product_id") != null) {
 			productID = Integer.parseInt(request.getParameter("product_id")); 
 			product = productService.getProductByID(productID);
+			//increases view of product
+			product.setView(product.getView()+1);
+			productService.update(product);
 		}
 	
 		// Get array of Pic

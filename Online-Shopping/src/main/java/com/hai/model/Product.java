@@ -1,6 +1,7 @@
 package com.hai.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,7 +16,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "Product")
@@ -37,7 +41,17 @@ public class Product {
 	private String brand;
 	@Column(name="profile_image")
 	private String profileImage;
+	private long view;
+	@Column(name="Import_Date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date importDate;
+	
 
+	//Map to Special Offer
+	@OneToOne(mappedBy="product",cascade=CascadeType.ALL)
+	private SpecialOffer offer;
+	
+	
 	// Map to Subcategory
 	@ManyToOne (cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name = "SubCategory_ID")
@@ -227,6 +241,30 @@ public class Product {
 
 	public void setBrand(String brand) {
 		this.brand = brand;
+	}
+
+	public long getView() {
+		return view;
+	}
+
+	public void setView(long view) {
+		this.view = view;
+	}
+
+	public Date getImportDate() {
+		return importDate;
+	}
+
+	public void setImportDate(Date importDate) {
+		this.importDate = importDate;
+	}
+
+	public SpecialOffer getOffer() {
+		return offer;
+	}
+
+	public void setOffer(SpecialOffer offer) {
+		this.offer = offer;
 	}
 
 }

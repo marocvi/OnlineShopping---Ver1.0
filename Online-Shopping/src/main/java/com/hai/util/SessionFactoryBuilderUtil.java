@@ -17,6 +17,7 @@ import com.hai.model.Payment;
 import com.hai.model.Price;
 import com.hai.model.Product;
 import com.hai.model.Role;
+import com.hai.model.SpecialOffer;
 import com.hai.model.SubCategory;
 import com.hai.model.Supplier;
 import com.hai.model.UserRole;
@@ -33,7 +34,7 @@ public class SessionFactoryBuilderUtil {
 				.addAnnotatedClass(Wishlist.class).addAnnotatedClass(Cart.class).addAnnotatedClass(CartDetail.class)
 				.addAnnotatedClass(Order.class).addAnnotatedClass(OrderDetail.class).addAnnotatedClass(Export.class)
 				.addAnnotatedClass(ExportDetail.class).addAnnotatedClass(Import.class)
-				.addAnnotatedClass(ImportDetail.class).addAnnotatedClass(Payment.class);
+				.addAnnotatedClass(ImportDetail.class).addAnnotatedClass(Payment.class).addAnnotatedClass(SpecialOffer.class);
 		return configuration.buildSessionFactory();
 	}
 }

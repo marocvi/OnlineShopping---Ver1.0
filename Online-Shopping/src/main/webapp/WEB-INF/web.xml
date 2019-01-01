@@ -19,6 +19,20 @@
 	<listener>
 		<listener-class>com.hai.config.MyRequestListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>com.hai.config.MySessionListener</listener-class>
+	</listener>
+	
+	
+	<!-- Error Page -->
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		 <error-code>404</error-code>
+		 <location>/error.jsp</location>
+	</error-page>
 	
 	
 	
@@ -44,13 +58,7 @@
 		<servlet-name>VerifyUserResultController</servlet-name>
 		<servlet-class>com.hai.controller.VerifyUserResultController</servlet-class>
 	</servlet>
-	<servlet>
-		<description>
-		</description>
-		<display-name>HomeController</display-name>
-		<servlet-name>HomeController</servlet-name>
-		<servlet-class>com.hai.controller.HomeController</servlet-class>
-	</servlet>
+	
 	<servlet>
 		<description>
 		</description>
@@ -170,6 +178,27 @@
 		<servlet-name>ExceptionHandler</servlet-name>
 		<servlet-class>com.hai.exception.ExceptionHandler</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>HomeController</display-name>
+		<servlet-name>HomeController</servlet-name>
+		<servlet-class>com.hai.controller.HomeController</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>CurrencyController</display-name>
+		<servlet-name>CurrencyController</servlet-name>
+		<servlet-class>com.hai.controller.CurrencyController</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>SearchController</display-name>
+		<servlet-name>SearchController</servlet-name>
+		<servlet-class>com.hai.controller.SearchController</servlet-class>
+	</servlet>
 	<servlet-mapping>
 
 		<servlet-name>AccountController</servlet-name>
@@ -187,10 +216,7 @@
 		<servlet-name>VerifyUserResultController</servlet-name>
 		<url-pattern>/verified</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>HomeController</servlet-name>
-		<url-pattern>/home</url-pattern>
-	</servlet-mapping>
+	
 	<servlet-mapping>
 		<servlet-name>LoginController</servlet-name>
 		<url-pattern>/login</url-pattern>
@@ -258,6 +284,18 @@
 	<servlet-mapping>
 		<servlet-name>ExceptionHandler</servlet-name>
 		<url-pattern>/exceptionHandler</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>HomeController</servlet-name>
+		<url-pattern>/home</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CurrencyController</servlet-name>
+		<url-pattern>/currency</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SearchController</servlet-name>
+		<url-pattern>/searching</url-pattern>
 	</servlet-mapping>
 
 	
