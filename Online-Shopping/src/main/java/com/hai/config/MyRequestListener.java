@@ -60,7 +60,8 @@ public class MyRequestListener implements ServletRequestListener {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void requestInitialized(ServletRequestEvent sre) {
-
+		//Ignore static resource		
+		
 		// Get sessionFactory and userService
 		sessionFactory = (SessionFactory) sre.getServletContext().getAttribute("sessionFactory");
 		userService = new UserServiceImpl(sessionFactory);
